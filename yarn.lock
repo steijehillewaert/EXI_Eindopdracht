@@ -734,7 +734,7 @@ electron-rebuild@^1.8.2:
     spawn-rx "^2.0.10"
     yargs "^7.0.2"
 
-electron@^3.0.4:
+electron@^3.0.9:
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/electron/-/electron-3.0.9.tgz#79bd25dfd5496918a00d579e702fb83082f1a036"
   integrity sha512-OoSoeUWo9PzbArgrwS1yTfTRSlpXmIgrFGWUuUZCjKAk4DGR70elHDNeRnnBJ9NTwXXZVifChcfx73Ah3GnlVQ==
@@ -2338,6 +2338,11 @@ terminal-paginator@^2.0.2:
     debug "^2.6.6"
     extend-shallow "^2.0.1"
     log-utils "^0.2.1"
+
+three@^0.98.0:
+  version "0.98.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.98.0.tgz#11d4e3cca4b5d099c7de0ea5afa153b5d20cda84"
+  integrity sha512-fihjYVjCmQbI03zt1+YCl/m+UrZCcDHFNLexgqBOIdPwnO6PYkQaYUsIbqtvNNse+BiMeu+pQWzZn9/NSnIv6A==
 
 throttleit@0.0.2:
   version "0.0.2"

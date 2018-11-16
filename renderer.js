@@ -19,19 +19,35 @@ process.__defineGetter__('stdin', () => {
 
 const five = require('johnny-five');
 const board = new five.Board();
+let accelerometer;
 
+const init = () => {
 
-board.on("ready", () => {
-    const led = new five.Led(13);
-    led.blink(500);
+    board.on("ready", () => {
+        const led = new five.Led(13);
+        led.blink(500);
 
-    const accelerometer = new five.Accelerometer({
-        controller: "MPU6050",
-        sensitivity: 16384 // optional
-    });
+        accelerometer = new five.Accelerometer({
+            controller: "MPU6050"
+        });
 
-    accelerometer.on("change", function () {
-        console.log("X: %d", this.x);
-        console.log("Y: %d", this.y);
-    });
-})
+        accelerometer.enable();
+
+        console.log(accelerometer);
+
+        accelerometer.on("change", function () {
+            console.log("accelerometer");
+            console.log("  x            : ", this.x);
+            console.log("  y            : ", this.y);
+            console.log("  z            : ", this.z);
+            console.log("  pitch        : ", this.pitch);
+            console.log("  roll         : ", this.roll);
+            console.log("  acceleration : ", this.acceleration);
+            console.log("  inclination  : ", this.inclination);
+            console.log("  orientation  : ", this.orientation);
+            console.log("--------------------------------------");
+        });
+    })
+}
+
+init();
