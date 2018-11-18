@@ -2,52 +2,41 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const Readable = require('stream').Readable;
+const Readable = require("stream").Readable;
 class MyStream extends Readable {
-    constructor(opts) {
-        super(opts);
-    }
-    _read() {}
+  constructor(opts) {
+    super(opts);
+  }
+  _read() {}
 }
 
-process.__defineGetter__('stdin', () => {
-    if (process.__stdin) return process.__stdin;
-    process.__stdin = new MyStream();
-    return process.__stdin;
+process.__defineGetter__("stdin", () => {
+  if (process.__stdin) return process.__stdin;
+  process.__stdin = new MyStream();
+  return process.__stdin;
 });
 
-
-const five = require('johnny-five');
-const board = new five.Board();
-let accelerometer;
-
 const init = () => {
+  const five = require("johnny-five");
+  const board = new five.Board();
 
-    board.on("ready", () => {
-        const led = new five.Led(13);
-        led.blink(500);
+  board.on("ready", function() {
+    const accelerometer = new five.Accelerometer({
+      pins: ["A4", "A5"]
+    });
 
-        accelerometer = new five.Accelerometer({
-            controller: "MPU6050"
-        });
+    accelerometer.enable();
 
-        accelerometer.enable();
+    if (accelerometer.hasAxis("z")) {
+      console.log(accelerometer.z);
+    }
 
-        console.log(accelerometer);
-
-        accelerometer.on("change", function () {
-            console.log("accelerometer");
-            console.log("  x            : ", this.x);
-            console.log("  y            : ", this.y);
-            console.log("  z            : ", this.z);
-            console.log("  pitch        : ", this.pitch);
-            console.log("  roll         : ", this.roll);
-            console.log("  acceleration : ", this.acceleration);
-            console.log("  inclination  : ", this.inclination);
-            console.log("  orientation  : ", this.orientation);
-            console.log("--------------------------------------");
-        });
-    })
-}
+    accelerometer.on("change", function() {
+      console.log("X: %d", this.x);
+      console.log("Y: %d", this.y);
+      console.log("Z: %d", this.z);
+    });
+  });
+};
 
 init();
