@@ -1,5 +1,5 @@
 const THREE = require(`three`);
-const Disc = require(`./classes/Disc.js`)
+const Vinyl = require(`./classes/Vinyl.js`);
 
 let scene,
     camera,
@@ -13,8 +13,8 @@ let scene,
 
 let hemisphereLight, shadowLight, ambientLight;
 
-const createDisc = () => {
-    scene.add(Disc.mesh);
+const createVinyl = () => {
+    scene.add(Vinyl.mesh);
 }
 
 const createScene = () => {
@@ -64,7 +64,7 @@ const handleWindowResize = () => {
 };
 
 const loop = () => {
-    Disc.spinDisc();
+    Vinyl.spinVinyl();
     requestAnimationFrame(loop);
     renderer.render(scene, camera);
 };
@@ -72,7 +72,7 @@ const loop = () => {
 const init = () => {
     createScene();
     createLights();
-    createDisc();
+    createVinyl();
     loop();
 };
 

@@ -3,6 +3,7 @@
 // All of the Node.js APIs are available in this process.
 const Arduino = require(`./classes/Arduino.js`)
 
+
 const init = () => {
 
     Arduino.setup()
@@ -12,20 +13,23 @@ const init = () => {
 
     board.on("ready", function () {
         const accelerometer = new five.Accelerometer({
+            controller: "ANALOG",
             pins: ["A4", "A5"]
         });
 
-        accelerometer.enable();
-
-        if (accelerometer.hasAxis("z")) {
-            console.log(accelerometer.z);
-        }
-
         accelerometer.on("change", function () {
-            console.log("X: %d", this.x);
-            console.log("Y: %d", this.y);
-            console.log("Z: %d", this.z);
+            console.log("accelerometer");
+            console.log("  x            : ", this.x);
+            console.log("  y            : ", this.y);
+            console.log("  z            : ", this.z);
+            console.log("  pitch        : ", this.pitch);
+            console.log("  roll         : ", this.roll);
+            console.log("  acceleration : ", this.acceleration);
+            console.log("  inclination  : ", this.inclination);
+            console.log("  orientation  : ", this.orientation);
+            console.log("--------------------------------------");
         });
+
     });
 };
 

@@ -1,9 +1,9 @@
 const THREE = require(`three`);
 
-class Disc {
+class Vinyl {
     constructor() {
 
-        const geom = new THREE.CircleGeometry(50, 32);
+        const geom = new THREE.CircleGeometry(70, 32);
 
         geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
 
@@ -16,9 +16,9 @@ class Disc {
         this.mesh = new THREE.Mesh(geom, mat);
     }
 
-    spinDisc() {
+    spinVinyl() {
         this.mesh.rotation.y += 0.005;
     }
 };
 
-module.exports = new Disc();
+module.exports = new Vinyl();
