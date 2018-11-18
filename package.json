@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "johnny-five": "^1.0.0",
-    "three": "^0.98.0"
+    "three": "^0.98.0",
+    "three-gltf-loader": "^1.98.0"
   }
 }
