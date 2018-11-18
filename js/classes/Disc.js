@@ -3,13 +3,13 @@ const THREE = require(`three`);
 class Disc {
     constructor() {
 
-        const geom = new THREE.RingGeometry(1, 50, 32);
+        const geom = new THREE.CircleGeometry(50, 32);
 
         geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
 
         const loader = new THREE.TextureLoader();
 
-        const mat = new THREE.MeshLambertMaterial({
+        const mat = new THREE.MeshBasicMaterial({
             map: loader.load('./assets/img/vinyl.png')
         });
 

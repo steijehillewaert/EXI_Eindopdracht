@@ -14,6 +14,8 @@ function createWindow() {
     height: 600
   })
 
+  mainWindow.setFullScreen(true);
+
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
 
