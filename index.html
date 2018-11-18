@@ -4,15 +4,33 @@
 <head>
   <meta charset="UTF-8">
   <title>Hello World!</title>
+  <style>
+    * {
+      border: 0;
+      margin: 0;
+    }
+
+    #world {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: linear-gradient(#e4e0ba, #f7d9aa);
+    }
+  </style>
 </head>
 
 <body>
+  <div id="world"></div>
 
 
   <script>
     // You can also require other files to run in this process
-    require('./renderer.js')
+    require('./js/renderer.js')
+    require('./js/three.js')
   </script>
+
+
 </body>
 
 </html>
