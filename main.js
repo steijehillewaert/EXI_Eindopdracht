@@ -1,3 +1,5 @@
+'use strict'
+
 // Modules to control application life and create native browser window
 const {
   app,
@@ -30,6 +32,8 @@ function createWindow() {
     mainWindow = null
   })
 }
+
+require('electron-reload')(__dirname)
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
