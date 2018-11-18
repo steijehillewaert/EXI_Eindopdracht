@@ -1,6 +1,5 @@
 const THREE = require(`three`);
 const Disc = require(`./classes/Disc.js`)
-// import Disc from "./classes/Disc.js";
 
 let scene,
     camera,
