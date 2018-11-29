@@ -95,7 +95,7 @@ const init = () => {
   createScene();
   loadModels();
   createLights();
-  createVinyl();
+  // createVinyl();
   loop();
 };
 
