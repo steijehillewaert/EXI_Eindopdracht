@@ -3,65 +3,45 @@
 // All of the Node.js APIs are available in this process.
 const Arduino = require(`./classes/Arduino.js`);
 
-
 const init = () => {
+  Arduino.setup();
 
-    Arduino.setup();
+  const five = require("johnny-five");
+  const board = new five.Board();
 
-    const SerialPort = require('serialport');
-    const port = new SerialPort('/dev/cu.usbmodem14101', {
-        autoOpen: false
+  board.on("ready", function() {
+    // Create an MMA7361 Accelerometer object:
+    //
+    // - attach Xo, Yo, and Zo to A0, A1, A2
+    // - specify the MMA7361 controller
+    // - optionally, specify the sleepPin
+    // - optionally, set it to auto-calibrate
+    // - optionally, set the zeroV values.
+    //    This can be done when retrieving them
+    //    after an autoCalibrate
+    var accelerometer = new five.Accelerometer({
+      controller: "MMA7361",
+      pins: ["A0", "A1", "A2"],
+      sleepPin: 13,
+      autoCalibrate: true,
+      // override the zeroV values if you know what
+      // they are from a previous autoCalibrate
+      zeroV: [320, 365, 295]
     });
 
-    port.open(function (err) {
-        if (err) {
-            return console.log('Error opening port: ', err.message);
-        }
-
-        // Because there's no callback to write, write errors will be emitted on the port:
-        port.write('main screen turn on');
+    accelerometer.on("change", function() {
+      console.log("accelerometer");
+      console.log("  x            : ", this.x);
+      console.log("  y            : ", this.y);
+      console.log("  z            : ", this.z);
+      console.log("  pitch        : ", this.pitch);
+      console.log("  roll         : ", this.roll);
+      console.log("  acceleration : ", this.acceleration);
+      console.log("  inclination  : ", this.inclination);
+      console.log("  orientation  : ", this.orientation);
+      console.log("--------------------------------------");
     });
-
-    // The open event is always emitted
-    port.on('open', function () {
-        // open logic
-    });
-
-    // Switches the port into "flowing mode"
-    port.on('data', function (data) {
-        console.log('Data:', data);
-    });
-
-    // Read data that is available but keep the stream from entering "flowing mode"
-    port.on('readable', function () {
-        console.log('Data:', port.read());
-    });
-
-
-
-    // const five = require("johnny-five");
-    // const board = new five.Board();
-
-    // board.on("ready", function () {
-    //     const accelerometer = new five.Accelerometer({
-    //         controller: "ANALOG",
-    //         pins: ["A4", "A5"]
-    //     });
-
-    //     accelerometer.on("change", function () {
-    //         console.log("accelerometer");
-    //         console.log("  x            : ", this.x);
-    //         console.log("  y            : ", this.y);
-    //         console.log("  z            : ", this.z);
-    //         console.log("  pitch        : ", this.pitch);
-    //         console.log("  roll         : ", this.roll);
-    //         console.log("  acceleration : ", this.acceleration);
-    //         console.log("  inclination  : ", this.inclination);
-    //         console.log("  orientation  : ", this.orientation);
-    //         console.log("--------------------------------------");
-    //     });
-
-    // });
+  });
 };
 
 init();
