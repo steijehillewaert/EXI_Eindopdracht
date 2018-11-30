@@ -1,0 +1,29 @@
+{
+    "songs": [
+        {
+            "title": "Boogie Wonderland",
+            "artist": "Earth, Wind & Fire",
+            "path": "boogie_wonderland.mp3"
+        },
+        {
+            "title": "Disco Inferno",
+            "artist": "Trammps",
+            "path": "disco_inferno.mp3"
+        },
+        {
+            "title": "Le Freak",
+            "artist": "Chic",
+            "path": "le_freak.mp3"
+        },
+        {
+            "title": "September",
+            "artist": "Earth, Wind & Fire",
+            "path": "september.mp3"
+        },
+        {
+            "title": "Stayin' Alive",
+            "artist": "Bee Gees",
+            "path": "stayin_alive.mp3"
+        }
+    ]
+}
