@@ -1,6 +1,7 @@
 const THREE = require(`three`);
 const loader = new THREE.JSONLoader();
-const Vinyl = require(`./classes/Vinyl.js`);
+const FBXLoader = require('three-fbx-loader');
+// const Vinyl = require(`./classes/Vinyl.js`);
 
 let scene,
   camera,
@@ -14,9 +15,8 @@ let scene,
 
 let hemisphereLight, shadowLight, ambientLight;
 
-const createVinyl = () => {
-  scene.add(Vinyl.mesh);
-};
+let ball;
+
 
 const createScene = () => {
   HEIGHT = window.innerHeight;
@@ -61,6 +61,7 @@ const createLights = () => {
   scene.add(ambientLight);
 };
 
+
 const handleWindowResize = () => {
   HEIGHT = window.innerHeight;
   WIDTH = window.innerWidth;
@@ -70,30 +71,33 @@ const handleWindowResize = () => {
 };
 
 const loop = () => {
-  Vinyl.spinVinyl();
+  // Vinyl.spinVinyl();
   requestAnimationFrame(loop);
+  ball.rotation.y += 0.005;
   renderer.render(scene, camera);
 };
 
-const JSONLoader = url =>
-  new Promise(resolve => loader.load(url, geometry => resolve(geometry)));
 
 const loadModels = () => {
-  // JSONLoader(`./assets/json/recordplayer.json`)
-  //   .then(geometry => {
-  //     const material = new THREE.MeshNormalMaterial(0x0000ff);
-  //     const player = new THREE.Mesh(geometry, material);
-  //     player.scale.set(7, 7, 7);
-  //     scene.add(player);
-  //   })
-  //   .catch(err => {
-  //     console.log(`Error: ${err}`);
-  //   });
   const loader = new THREE.ObjectLoader();
-  loader.load('./assets/json/recordplayer-plain.dae.json', object => {
-    object.scale.set(8, 8, 8);
-    object.position.z = 5;
-    scene.add(object);
+  // loader.load('./assets/json/recordplayer-plain.dae.json', recordplayer => {
+  //   recordplayer.scale.set(8, 8, 8);
+  //   recordplayer.position.z = -10;
+  //   scene.add(recordplayer);
+  // });
+
+  const fbxloader = new FBXLoader();
+
+  fbxloader.load('./assets/models/recordplayer.fbx', recordplayer => {
+    scene.add(recordplayer);
+  });
+
+  loader.load('./assets/json/discoball.json', discoball => {
+    discoball.scale.set(0.25, 0.25, 0.25);
+    discoball.position.x = 0;
+    discoball.position.z = 0;
+    ball = discoball;
+    scene.add(discoball);
   });
 };
 
