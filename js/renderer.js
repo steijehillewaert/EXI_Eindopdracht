@@ -6,8 +6,9 @@ const Arduino = require(`./classes/Arduino.js`);
 const THREE = require(`three`);
 // const discoball = require(`./classes/Vinyl.js`);
 const FBXLoader = require('three-fbx-loader');
+const TextureLoader = new THREE.TextureLoader();
 
-const loader = new FBXLoader();
+const FBX = new FBXLoader();
 
 
 let scene,
@@ -24,6 +25,8 @@ let discoball, recordplayer;
 
 let pitch, roll;
 
+let plaat1;
+
 let hemisphereLight, shadowLight, ambientLight;
 
 const createScene = () => {
@@ -35,7 +38,7 @@ const createScene = () => {
   aspectRatio = WIDTH / HEIGHT;
   fieldOfView = 75;
   nearPlane = 0.1;
-  farPlane = 1000;
+  farPlane = 800;
 
   camera = new THREE.PerspectiveCamera(
     fieldOfView,
@@ -44,6 +47,7 @@ const createScene = () => {
     farPlane
   );
   camera.position.set(0, 20, 100);
+  camera.rotation.x = -0.1;
 
   renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -60,13 +64,8 @@ const createScene = () => {
 };
 
 const createLights = () => {
-  hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, 0.9);
-  shadowLight = new THREE.DirectionalLight(0xffffff, 0.2);
-  ambientLight = new THREE.AmbientLight(0xdc8874, 0.9);
-
+  hemisphereLight = new THREE.HemisphereLight(0x0000ff, 0x00ff00, 0.6);
   scene.add(hemisphereLight);
-  scene.add(shadowLight);
-  scene.add(ambientLight);
 };
 
 const handleWindowResize = () => {
@@ -79,12 +78,12 @@ const handleWindowResize = () => {
 
 
 const createDiscoball = () => {
-  loader.load('./assets/models/discoball.fbx', object => {
+  FBX.load('./assets/models/discoball.fbx', object => {
     object.scale.set(0.25, 0.25, 0.25);
     object.position.x = pitch;
     object.position.z = roll;
 
-    console.log(object);
+    // console.log(object);
 
     discoball = object;
     scene.add(discoball);
@@ -92,17 +91,29 @@ const createDiscoball = () => {
 };
 
 const createPlayer = () => {
-  loader.load('./assets/models/recordplayer.fbx', object => {
-    // object.scale.set(0.25, 0.25, 0.25);
+  FBX.load('./assets/models/recordplayer.fbx', object => {
+    // console.log(object.children[1].children[5]);
 
-    console.log(object);
+    plaat1 = object.children[1].children[5];
 
-    // const action = object.clipAction(object.animations[0]);
-    // action.play();
+    // const texture = new THREE.TextureLoader().load('./assets/models/tex/september.png');
+
+    console.log(plaat1)
+
+    // console.log(object)
+
+    // plaat1.material.map = texture;
+
+    // console.log(plaat1.material({
+    //   map: texture
+    // }));
+
+
 
     recordplayer = object;
-    recordplayer.scale.set(700, 700, 700);
-    // recordplayer.play();
+    recordplayer.castShadow = true;
+    recordplayer.receiveShadow = true;
+    recordplayer.scale.set(8, 8, 8);
     scene.add(recordplayer);
   });
 }
@@ -110,6 +121,8 @@ const createPlayer = () => {
 const loop = () => {
   requestAnimationFrame(loop);
   // discoball.rotation.y += 0.005;
+
+  plaat1.rotation.y += 0.005;
 
   discoball.position.x = pitch;
   discoball.position.z = roll;
