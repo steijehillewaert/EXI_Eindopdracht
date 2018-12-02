@@ -81,8 +81,8 @@ const handleWindowResize = () => {
 const createDiscoball = () => {
   loader.load('./assets/models/discoball.fbx', object => {
     object.scale.set(0.25, 0.25, 0.25);
-    object.position.x = pitch;
-    object.position.z = roll;
+    // object.position.x = pitch;
+    // object.position.z = roll;
 
     console.log(object);
 
@@ -98,13 +98,18 @@ const createPlayer = () => {
     console.log(object);
 
     // recordplayer = object;
-    scene.add(recordplayer);
+    // scene.add(recordplayer);
   });
 }
 
 const loop = () => {
   requestAnimationFrame(loop);
   discoball.rotation.y += 0.005;
+
+  discoball.position.x = pitch;
+  discoball.position.z = roll;
+  discoball.rotation.x = pitch;
+
   renderer.render(scene, camera);
 };
 
