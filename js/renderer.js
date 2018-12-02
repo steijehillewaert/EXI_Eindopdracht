@@ -104,11 +104,12 @@ const createPlayer = () => {
 
 const loop = () => {
   requestAnimationFrame(loop);
-  discoball.rotation.y += 0.005;
+  // discoball.rotation.y += 0.005;
 
   discoball.position.x = pitch;
   discoball.position.z = roll;
-  discoball.rotation.x = pitch;
+  // discoball.rotation.x = pitch;
+  // discoball.rotation.z = roll;
 
   renderer.render(scene, camera);
 };
@@ -131,8 +132,8 @@ const accelerometer = () => {
   board.on("ready", function () {
     const accelerometer = new five.Accelerometer({
       controller: "MMA7361",
-      pins: ["A0", "A1", "A2"],
-      sleepPin: 13,
+      pins: ["A3", "A4", "A5"],
+      sleepPin: 8,
       autoCalibrate: true
       // override the zeroV values if you know what
       // they are from a previous autoCalibrate
@@ -151,8 +152,9 @@ const accelerometer = () => {
       // console.log("  orientation  : ", this.orientation);
       console.log("--------------------------------------");
 
-      pitch = Math.round(this.pitch);
-      roll = Math.round(this.roll);
+      pitch = Math.floor(Math.round(this.pitch));
+      // console.log(pitch);
+      roll = Math.floor(Math.round(this.roll));
     });
   });
 };
