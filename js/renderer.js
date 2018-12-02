@@ -7,6 +7,8 @@ const THREE = require(`three`);
 // const discoball = require(`./classes/Vinyl.js`);
 const FBXLoader = require('three-fbx-loader');
 
+const loader = new FBXLoader();
+
 
 let scene,
   camera,
@@ -18,7 +20,7 @@ let scene,
   WIDTH,
   renderer;
 
-let discoball;
+let discoball, recordplayer;
 
 let pitch, roll;
 
@@ -77,17 +79,28 @@ const handleWindowResize = () => {
 
 
 const createDiscoball = () => {
-
-  const FBX = new FBXLoader();
-  FBX.load('./assets/models/discoball.fbx', object => {
+  loader.load('./assets/models/discoball.fbx', object => {
     object.scale.set(0.25, 0.25, 0.25);
     object.position.x = pitch;
     object.position.z = roll;
+
+    console.log(object);
 
     discoball = object;
     scene.add(discoball);
   });
 };
+
+const createPlayer = () => {
+  loader.load('./assets/models/recordplayer.fbx', object => {
+    // object.scale.set(0.25, 0.25, 0.25);
+
+    console.log(object);
+
+    // recordplayer = object;
+    scene.add(recordplayer);
+  });
+}
 
 const loop = () => {
   requestAnimationFrame(loop);
@@ -101,6 +114,7 @@ const init = () => {
 
   createScene();
   createDiscoball();
+  createPlayer();
   createLights();
   loop();
 };
