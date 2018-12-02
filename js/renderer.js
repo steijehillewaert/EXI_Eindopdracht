@@ -81,8 +81,8 @@ const handleWindowResize = () => {
 const createDiscoball = () => {
   loader.load('./assets/models/discoball.fbx', object => {
     object.scale.set(0.25, 0.25, 0.25);
-    // object.position.x = pitch;
-    // object.position.z = roll;
+    object.position.x = pitch;
+    object.position.z = roll;
 
     console.log(object);
 
@@ -97,8 +97,13 @@ const createPlayer = () => {
 
     console.log(object);
 
-    // recordplayer = object;
-    // scene.add(recordplayer);
+    // const action = object.clipAction(object.animations[0]);
+    // action.play();
+
+    recordplayer = object;
+    recordplayer.scale.set(700, 700, 700);
+    // recordplayer.play();
+    scene.add(recordplayer);
   });
 }
 
@@ -132,7 +137,7 @@ const accelerometer = () => {
   board.on("ready", function () {
     const accelerometer = new five.Accelerometer({
       controller: "MMA7361",
-      pins: ["A3", "A4", "A5"],
+      pins: ["A0", "A1", "A2"],
       sleepPin: 8,
       autoCalibrate: true
       // override the zeroV values if you know what
