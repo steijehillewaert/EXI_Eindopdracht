@@ -8,11 +8,13 @@ class Discoball {
             discoball.position.x = 0;
             discoball.position.z = 0;
 
-            const mat = new THREE.MeshBasicMaterial({
-                color: 0xffff00
-            });
+            // const mat = new THREE.MeshBasicMaterial({
+            //     color: 0xffff00
+            // });
 
-            this.mesh = new THREE.Mesh(discoball, mat);
+            // this.mesh = new THREE.Mesh(discoball, mat);
+
+            this.mesh = discoball;
         });
     }
 

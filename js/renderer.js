@@ -4,14 +4,13 @@
 const Arduino = require(`./classes/Arduino.js`);
 
 const THREE = require(`three`);
-// const discoball = require(`./classes/Vinyl.js`);
-const FBXLoader = require('three-fbx-loader');
+// const kaas = require(`./classes/Discoball.js`);
+const FBXLoader = require("three-fbx-loader");
 const TextureLoader = new THREE.TextureLoader();
 
 const FBX = new FBXLoader();
 
 const clock = new THREE.Clock();
-
 
 let scene,
   camera,
@@ -88,9 +87,8 @@ const handleWindowResize = () => {
   camera.updateProjectionMatrix();
 };
 
-
 const createDiscoball = () => {
-  FBX.load('./assets/models/discoball.fbx', object => {
+  FBX.load("./assets/models/discoball.fbx", object => {
     object.scale.set(0.25, 0.25, 0.25);
     object.position.x = pitch;
     object.position.z = roll;
@@ -106,11 +104,13 @@ const createDiscoball = () => {
 };
 
 const createPlayer = () => {
-  FBX.load('./assets/models/recordplayer.fbx', object => {
+  FBX.load("./assets/models/recordplayer.fbx", object => {
     console.log(object);
     plaat1 = object.children[1].children[8];
 
-    const texture = new THREE.TextureLoader().load('./assets/models/tex/september2.png');
+    const texture = new THREE.TextureLoader().load(
+      "./assets/models/tex/september2.png"
+    );
 
     plaat1.material.map = texture;
 
@@ -122,19 +122,21 @@ const createPlayer = () => {
     recordplayer.scale.set(8, 8, 8);
     scene.add(recordplayer);
 
-
     mixer = new THREE.AnimationMixer(recordplayer);
     mixer.clipAction(object.animations[0]).play();
   });
-}
+};
 
 const loop = () => {
   requestAnimationFrame(loop);
 
   plaat1.rotation.y += 0.005;
 
-  discoball.position.x = pitch;
-  discoball.position.z = roll;
+  discoball.position.x = 0;
+  discoball.position.z = 0;
+
+  // discoball.position.x = pitch;
+  // discoball.position.z = roll;
   // discoball.rotation.x = pitch;
   // discoball.rotation.z = roll;
 
