@@ -10,7 +10,7 @@ const TextureLoader = new THREE.TextureLoader();
 
 const FBX = new FBXLoader();
 
-const clock = new THREE.Clock();
+const fact = document.querySelector(`#fact`);
 
 let scene,
   stars,
@@ -154,8 +154,8 @@ const createDiscoLights = () => {
 }
 
 createStars = () => {
-  //const starAmt = 20000;
   const starGeo = new THREE.SphereGeometry(1000, 100, 50);
+  //hoeveelheid sterren
   const starAmt = 10000;
   const starMat = {
     size: 1.0,
@@ -288,9 +288,26 @@ const loop = () => {
   renderer.render(scene, camera);
 };
 
+const createFacts = songs => {
+
+  console.log(songs.songs[0].facts[0])
+
+  fact.textContent = songs.songs[0].facts[0].fact01;
+};
+
+const parse = songs => {
+  createFacts(songs);
+  console.log(songs);
+}
+
 const init = () => {
   Arduino.setup();
   accelerometer();
+
+  const data = `assets/json/data.json`;
+  fetch(data)
+    .then(r => r.json())
+    .then(parse)
 
   createScene();
   createDiscoball();
