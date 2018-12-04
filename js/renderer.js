@@ -177,7 +177,7 @@ const handleWindowResize = () => {
 const createDiscoball = () => {
 
   //nieuwe discobal
-  const geo = new THREE.SphereGeometry(55, 30, 20);
+  const geo = new THREE.SphereGeometry(70, 30, 20);
   const mat = new THREE.MeshPhongMaterial({
     emissive: '#222',
     shininess: 50,
@@ -190,13 +190,13 @@ const createDiscoball = () => {
     combine: THREE.AddOperation
   });
   discoball = new THREE.Mesh(geo, mat);
-  discoball.scale.set(.5, .5, .5);
+  discoball.scale.set(.3, .3, .3);
   scene.add(discoball);
 };
 
 const createPlayer = () => {
   FBX.load("./assets/models/recordplayer.fbx", object => {
-    // console.log(object.children[1].children[1]);
+    console.log(object);
     plaat1 = object.children[1].children[8];
 
     const texture = new THREE.TextureLoader().load(
@@ -231,13 +231,13 @@ const loop = () => {
 
   plaat1.rotation.y += 0.005;
 
-  discoball.position.x = 0;
-  discoball.position.z = 0;
+  // discoball.position.x = 0;
+  // discoball.position.z = 0;
 
   stars.rotation.y += 0.0005;
 
-  // discoball.position.x = pitch;
-  // discoball.position.z = roll;
+  discoball.position.x = pitch;
+  discoball.position.z = roll;
   // discoball.rotation.x = pitch;
   // discoball.rotation.z = roll;
 
@@ -326,16 +326,16 @@ const accelerometer = () => {
       // console.log("  x            : ", Math.round(this.x));
       // console.log("  y            : ", Math.round(this.y));
       // console.log("  z            : ", Math.round(this.z));
-      // console.log("  links/rechts        : ", Math.round(this.pitch));
-      // console.log("  Voor/achter         : ", Math.round(this.roll));
+      console.log("  links/rechts        : ", Math.round(this.pitch));
+      console.log("  Voor/achter         : ", Math.round(this.roll));
       // console.log("  acceleration : ", this.acceleration);
       // console.log("  inclination  : ", this.inclination);
       // console.log("  orientation  : ", this.orientation);
       // console.log("--------------------------------------");
 
-      pitch = Math.floor(Math.round(this.pitch));
+      pitch = this.pitch;
       // console.log(pitch);
-      roll = Math.floor(Math.round(this.roll));
+      roll = this.roll;
     });
   });
 };
