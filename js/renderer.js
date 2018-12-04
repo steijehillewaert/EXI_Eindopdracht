@@ -12,6 +12,7 @@ const FBX = new FBXLoader();
 
 const fact = document.querySelector(`#fact`);
 
+
 let scene,
   stars,
   camera,
@@ -32,7 +33,7 @@ let pitch, roll;
 
 let plaat1;
 
-let hemisphereLight, shadowLight, ambientLight, light, light1, light2, light3, light4, light5, light6, light7;
+let ambientLight, light, light1, light2, light3, light4, light5, light6, light7;
 
 const createScene = () => {
   HEIGHT = window.innerHeight;
@@ -76,15 +77,6 @@ const createScene = () => {
   window.scene = scene;
 };
 
-const createLights = () => {
-  hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, 0.9);
-  shadowLight = new THREE.DirectionalLight(0xffffff, 0.2);
-  ambientLight = new THREE.AmbientLight(0xdc8874, 0.9);
-
-  scene.add(hemisphereLight);
-  scene.add(shadowLight);
-  scene.add(ambientLight);
-};
 
 const createDiscoLights = () => {
   //lights
@@ -183,19 +175,6 @@ const handleWindowResize = () => {
 };
 
 const createDiscoball = () => {
-  // FBX.load("./assets/models/discoball.fbx", object => {
-  //   object.scale.set(0.25, 0.25, 0.25);
-  //   object.position.x = pitch;
-  //   object.position.z = roll;
-
-  //   // console.log(object);
-
-  //   discoball = object;
-
-  //   // discoball.material.shininess = 100;
-  //   // console.log(discoball.material.shininess);
-  //   scene.add(discoball);
-  // });
 
   //nieuwe discobal
   const geo = new THREE.SphereGeometry(55, 30, 20);
@@ -217,7 +196,7 @@ const createDiscoball = () => {
 
 const createPlayer = () => {
   FBX.load("./assets/models/recordplayer.fbx", object => {
-    console.log(object);
+    // console.log(object.children[1].children[1]);
     plaat1 = object.children[1].children[8];
 
     const texture = new THREE.TextureLoader().load(
@@ -226,7 +205,15 @@ const createPlayer = () => {
 
     plaat1.material.map = texture;
 
+    // object.children[1].children[1].material.color("#1d1946");
+
+    // console.log(object.children[1].children[1].material);
+
     recordplayer = object;
+
+    // recordplayer.children[1].children[1].material({
+    //   color: 'gray'
+    // });
 
     recordplayer.castShadow = true;
     recordplayer.receiveShadow = true;
@@ -246,6 +233,8 @@ const loop = () => {
 
   discoball.position.x = 0;
   discoball.position.z = 0;
+
+  stars.rotation.y += 0.0005;
 
   // discoball.position.x = pitch;
   // discoball.position.z = roll;
@@ -312,7 +301,6 @@ const init = () => {
   createScene();
   createDiscoball();
   createPlayer();
-  //createLights();
   createDiscoLights();
   createStars();
   loop();
