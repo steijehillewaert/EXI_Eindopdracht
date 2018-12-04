@@ -13,7 +13,9 @@ const FBX = new FBXLoader();
 const clock = new THREE.Clock();
 
 let scene,
+  stars,
   camera,
+  cubeCamera,
   fieldOfView,
   aspectRatio,
   nearPlane,
@@ -30,7 +32,7 @@ let pitch, roll;
 
 let plaat1;
 
-let hemisphereLight, shadowLight, ambientLight;
+let hemisphereLight, shadowLight, ambientLight, light, light1, light2, light3, light4, light5, light6, light7;
 
 const createScene = () => {
   HEIGHT = window.innerHeight;
@@ -50,8 +52,13 @@ const createScene = () => {
     farPlane
   );
 
-  camera.position.set(0, 20, 100);
+  camera.position.set(0, 20, 90);
   camera.rotation.x = -0.1;
+
+  //cube camera
+  cubeCamera = new THREE.CubeCamera(1, 100000, 1024);
+  console.log(cubeCamera);
+  scene.add(cubeCamera);
 
   renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -79,6 +86,94 @@ const createLights = () => {
   scene.add(ambientLight);
 };
 
+const createDiscoLights = () => {
+  //lights
+  ambientLight = new THREE.AmbientLight(0xffffff);
+  scene.add(ambientLight);
+
+  light = new THREE.PointLight(0xFFFBE3);
+  light.position.set(100, 0, -60);
+  scene.add(light);
+
+  light1 = new THREE.PointLight(0xFFFBE3);
+  light1.position.set(-50, 200, 50);
+  scene.add(light1);
+
+  //colors
+  const intensity = 2.5;
+  const distance = 100;
+  const decay = 2.0;
+
+  const c1 = 0xff0040,
+    c2 = 0x0040ff,
+    c3 = 0x80ff80,
+    c4 = 0xffaa00,
+    c5 = 0x00ffaa,
+    c6 = 0xff1100;
+
+  const dot = new THREE.SphereGeometry(0.25, 16, 8);
+
+  light2 = new THREE.PointLight(c1, intensity, distance, decay);
+  light2.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
+    color: c1
+  })));
+  scene.add(light2);
+
+  light3 = new THREE.PointLight(c2, intensity, distance, decay);
+  light3.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
+    color: c2
+  })));
+  scene.add(light3);
+
+  light4 = new THREE.PointLight(c3, intensity, distance, decay);
+  light4.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
+    color: c3
+  })));
+  scene.add(light4);
+
+  light5 = new THREE.PointLight(c4, intensity, distance, decay);
+  light5.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
+    color: c4
+  })));
+  scene.add(light5);
+
+  light6 = new THREE.PointLight(c5, intensity, distance, decay);
+  light6.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
+    color: c5
+  })));
+  scene.add(light6);
+
+  light7 = new THREE.PointLight(c6, intensity, distance, decay);
+  light7.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
+    color: c6
+  })));
+  scene.add(light7);
+
+  //add orbital controls
+  //controls = new THREE.OrbitControls(camera);
+}
+
+createStars = () => {
+  //const starAmt = 20000;
+  const starGeo = new THREE.SphereGeometry(1000, 100, 50);
+  const starAmt = 10000;
+  const starMat = {
+    size: 1.0,
+    opacity: 0.7
+  };
+  const starMesh = new THREE.PointsMaterial(starMat);
+
+  for (var i = 0; i < starAmt; i++) {
+    var starVertex = new THREE.Vector3();
+    starVertex.x = Math.random() * 1000 - 500;
+    starVertex.y = Math.random() * 1000 - 500;
+    starVertex.z = Math.random() * 1000 - 500;
+    starGeo.vertices.push(starVertex);
+  }
+  stars = new THREE.Points(starGeo, starMesh);
+  scene.add(stars);
+}
+
 const handleWindowResize = () => {
   HEIGHT = window.innerHeight;
   WIDTH = window.innerWidth;
@@ -88,19 +183,36 @@ const handleWindowResize = () => {
 };
 
 const createDiscoball = () => {
-  FBX.load("./assets/models/discoball.fbx", object => {
-    object.scale.set(0.25, 0.25, 0.25);
-    object.position.x = pitch;
-    object.position.z = roll;
+  // FBX.load("./assets/models/discoball.fbx", object => {
+  //   object.scale.set(0.25, 0.25, 0.25);
+  //   object.position.x = pitch;
+  //   object.position.z = roll;
 
-    // console.log(object);
+  //   // console.log(object);
 
-    discoball = object;
+  //   discoball = object;
 
-    // discoball.material.shininess = 100;
-    // console.log(discoball.material.shininess);
-    scene.add(discoball);
+  //   // discoball.material.shininess = 100;
+  //   // console.log(discoball.material.shininess);
+  //   scene.add(discoball);
+  // });
+
+  //nieuwe discobal
+  const geo = new THREE.SphereGeometry(55, 30, 20);
+  const mat = new THREE.MeshPhongMaterial({
+    emissive: '#222',
+    shininess: 50,
+    reflectivity: 3.5,
+    shading: THREE.FlatShading,
+    specular: 'white',
+    color: 'gray',
+    side: THREE.DoubleSide,
+    envMap: cubeCamera.renderTarget.texture,
+    combine: THREE.AddOperation
   });
+  discoball = new THREE.Mesh(geo, mat);
+  discoball.scale.set(.5, .5, .5);
+  scene.add(discoball);
 };
 
 const createPlayer = () => {
@@ -140,9 +252,39 @@ const loop = () => {
   // discoball.rotation.x = pitch;
   // discoball.rotation.z = roll;
 
-  const delta = clock.getDelta();
-  mixer.update(delta);
+  //move dico lights -> PARTYYYY
+  const time = Date.now() * 0.0025;
+  const d = 100;
+  light2.position.x = Math.cos(time * 0.3) * d;
+  light2.position.y = Math.cos(time * 0.1) * d;
+  light2.position.z = Math.sin(time * 0.7) * d;
 
+  light3.position.x = Math.sin(time * 0.5) * d;
+  light3.position.y = Math.cos(time * 0.1) * d;
+  light3.position.z = Math.sin(time * 0.5) * d;
+
+  light4.position.x = Math.sin(time * 0.3) * d;
+  light4.position.y = Math.sin(time * 0.1) * d;
+  light4.position.z = Math.sin(time * 0.5) * d;
+
+  light5.position.x = Math.cos(time * 0.3) * d;
+  light5.position.y = Math.cos(time * 0.1) * d;
+  light5.position.z = Math.sin(time * 0.5) * d;
+
+  light6.position.x = Math.cos(time * 0.5) * d;
+  light6.position.y = Math.sin(time * 0.3) * d;
+  light6.position.z = Math.cos(time * 0.5) * d;
+
+  light7.position.x = Math.cos(time * 0.5) * d;
+  light7.position.y = Math.sin(time * 0.1) * d;
+  light7.position.z = Math.cos(time * 0.5) * d;
+
+  //Update the render target cube
+  discoball.visible = false;
+  cubeCamera.position.copy(discoball.position);
+  cubeCamera.updateCubeMap(renderer, scene);
+
+  discoball.visible = true;
   renderer.render(scene, camera);
 };
 
@@ -153,7 +295,9 @@ const init = () => {
   createScene();
   createDiscoball();
   createPlayer();
-  createLights();
+  //createLights();
+  createDiscoLights();
+  createStars();
   loop();
 };
 
