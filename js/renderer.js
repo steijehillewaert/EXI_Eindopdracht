@@ -278,9 +278,15 @@ const loop = () => {
 };
 
 const createFacts = songs => {
+  const geometry = new THREE.BoxGeometry(100, 20, 5);
+  const material = new THREE.MeshBasicMaterial({ color: '#FFFFFF' });
+  const cube = new THREE.Mesh(geometry, material);
+  cube.position.y = 60;
+
+  console.log(cube);
+  scene.add(cube);
 
   console.log(songs.songs[0].facts[0])
-
   fact.textContent = songs.songs[0].facts[0].fact01;
 };
 
