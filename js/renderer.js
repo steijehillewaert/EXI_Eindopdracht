@@ -280,18 +280,6 @@ const loop = () => {
   discoball.position.x = scale(pitch, -20, 20, -20, 10);
   discoball.position.z = scale(roll, 20, -20, 65, 45);
 
-  if (pitch = 0 || 1 || -1 || 2) {
-    // discoball.position.x = 0;
-    console.log("beweeg ni muttn");
-  } else {
-    console.log("beweegt wel hoer");
-  }
-
-  if (roll = 0 || 1 || -1 || 2) {
-    console.log("beweeg ni muttn");
-  } else {
-    console.log("beweegt wel hoer");
-  }
 
   // discoball.rotation.x = pitch;
   // discoball.rotation.z = roll;
