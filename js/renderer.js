@@ -12,10 +12,6 @@ const FBX = new FBXLoader();
 
 const fact = document.querySelector(`#fact`);
 
-const scale = (num, in_min, in_max, out_min, out_max) => {
-  return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
 
 
 const songs = [
@@ -273,12 +269,8 @@ const loop = () => {
   // discoball.position.x = pitch;
   // discoball.position.z = roll;
 
-  // console.log(scale(pitch, -20, 20, -20, 8));
-
-
-
-  discoball.position.x = scale(pitch, -20, 20, -20, 10);
-  discoball.position.z = scale(roll, 20, -20, 65, 45);
+  discoball.position.x = THREE.Math.mapLinear(pitch, -20, 20, -20, 10);
+  discoball.position.z = THREE.Math.mapLinear(roll, 20, -20, 65, 45);
 
 
   // discoball.rotation.x = pitch;
