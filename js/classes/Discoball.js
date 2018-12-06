@@ -2,6 +2,7 @@ const THREE = require(`three`);
 
 class Discoball {
     constructor() {
+
         const geo = new THREE.SphereGeometry(70, 30, 20);
         const mat = new THREE.MeshPhongMaterial({
             emissive: "#222",

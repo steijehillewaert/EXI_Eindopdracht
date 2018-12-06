@@ -213,8 +213,6 @@ const handleWindowResize = () => {
 };
 
 const createDiscoball = () => {
-  //nieuwe discobal
-
   scene.add(Discoball.mesh);
 };
 
