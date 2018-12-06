@@ -12,6 +12,19 @@ const FBX = new FBXLoader();
 
 const fact = document.querySelector(`#fact`);
 
+const scale = (num, in_min, in_max, out_min, out_max) => {
+  return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+
+
+const songs = [
+  "assets/songs/boogie_wonderland.mp3",
+  "assets/songs/september.mp3"
+];
+
+const $audio = document.querySelector(`#audio`);
+console.log($audio);
 
 let scene,
   stars,
@@ -77,17 +90,16 @@ const createScene = () => {
   window.scene = scene;
 };
 
-
 const createDiscoLights = () => {
   //lights
   ambientLight = new THREE.AmbientLight(0xffffff);
   scene.add(ambientLight);
 
-  light = new THREE.PointLight(0xFFFBE3);
+  light = new THREE.PointLight(0xfffbe3);
   light.position.set(100, 0, -60);
   scene.add(light);
 
-  light1 = new THREE.PointLight(0xFFFBE3);
+  light1 = new THREE.PointLight(0xfffbe3);
   light1.position.set(-50, 200, 50);
   scene.add(light1);
 
@@ -106,44 +118,74 @@ const createDiscoLights = () => {
   const dot = new THREE.SphereGeometry(0.25, 16, 8);
 
   light2 = new THREE.PointLight(c1, intensity, distance, decay);
-  light2.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
-    color: c1
-  })));
+  light2.add(
+    new THREE.Mesh(
+      dot,
+      new THREE.MeshBasicMaterial({
+        color: c1
+      })
+    )
+  );
   scene.add(light2);
 
   light3 = new THREE.PointLight(c2, intensity, distance, decay);
-  light3.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
-    color: c2
-  })));
+  light3.add(
+    new THREE.Mesh(
+      dot,
+      new THREE.MeshBasicMaterial({
+        color: c2
+      })
+    )
+  );
   scene.add(light3);
 
   light4 = new THREE.PointLight(c3, intensity, distance, decay);
-  light4.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
-    color: c3
-  })));
+  light4.add(
+    new THREE.Mesh(
+      dot,
+      new THREE.MeshBasicMaterial({
+        color: c3
+      })
+    )
+  );
   scene.add(light4);
 
   light5 = new THREE.PointLight(c4, intensity, distance, decay);
-  light5.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
-    color: c4
-  })));
+  light5.add(
+    new THREE.Mesh(
+      dot,
+      new THREE.MeshBasicMaterial({
+        color: c4
+      })
+    )
+  );
   scene.add(light5);
 
   light6 = new THREE.PointLight(c5, intensity, distance, decay);
-  light6.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
-    color: c5
-  })));
+  light6.add(
+    new THREE.Mesh(
+      dot,
+      new THREE.MeshBasicMaterial({
+        color: c5
+      })
+    )
+  );
   scene.add(light6);
 
   light7 = new THREE.PointLight(c6, intensity, distance, decay);
-  light7.add(new THREE.Mesh(dot, new THREE.MeshBasicMaterial({
-    color: c6
-  })));
+  light7.add(
+    new THREE.Mesh(
+      dot,
+      new THREE.MeshBasicMaterial({
+        color: c6
+      })
+    )
+  );
   scene.add(light7);
 
   //add orbital controls
   //controls = new THREE.OrbitControls(camera);
-}
+};
 
 createStars = () => {
   const starGeo = new THREE.SphereGeometry(1000, 100, 50);
@@ -164,7 +206,7 @@ createStars = () => {
   }
   stars = new THREE.Points(starGeo, starMesh);
   scene.add(stars);
-}
+};
 
 const handleWindowResize = () => {
   HEIGHT = window.innerHeight;
@@ -175,22 +217,22 @@ const handleWindowResize = () => {
 };
 
 const createDiscoball = () => {
-
   //nieuwe discobal
   const geo = new THREE.SphereGeometry(70, 30, 20);
   const mat = new THREE.MeshPhongMaterial({
-    emissive: '#222',
+    emissive: "#222",
     shininess: 50,
     reflectivity: 3.5,
     shading: THREE.FlatShading,
-    specular: 'white',
-    color: 'gray',
+    specular: "white",
+    color: "gray",
     side: THREE.DoubleSide,
     envMap: cubeCamera.renderTarget.texture,
     combine: THREE.AddOperation
   });
   discoball = new THREE.Mesh(geo, mat);
-  discoball.scale.set(.3, .3, .3);
+  discoball.scale.set(0.1, 0.1, 0.1);
+  discoball.position.y = 11;
   scene.add(discoball);
 };
 
@@ -205,15 +247,7 @@ const createPlayer = () => {
 
     plaat1.material.map = texture;
 
-    // object.children[1].children[1].material.color("#1d1946");
-
-    // console.log(object.children[1].children[1].material);
-
     recordplayer = object;
-
-    // recordplayer.children[1].children[1].material({
-    //   color: 'gray'
-    // });
 
     recordplayer.castShadow = true;
     recordplayer.receiveShadow = true;
@@ -221,8 +255,8 @@ const createPlayer = () => {
     recordplayer.scale.set(8, 8, 8);
     scene.add(recordplayer);
 
-    mixer = new THREE.AnimationMixer(recordplayer);
-    mixer.clipAction(object.animations[0]).play();
+    // mixer = new THREE.AnimationMixer(recordplayer);
+    // mixer.clipAction(object.animations[0]).play();
   });
 };
 
@@ -236,8 +270,29 @@ const loop = () => {
 
   stars.rotation.y += 0.0005;
 
-  discoball.position.x = pitch;
-  discoball.position.z = roll;
+  // discoball.position.x = pitch;
+  // discoball.position.z = roll;
+
+  // console.log(scale(pitch, -20, 20, -20, 8));
+
+
+
+  discoball.position.x = scale(pitch, -20, 20, -20, 10);
+  discoball.position.z = scale(roll, 20, -20, 65, 45);
+
+  if (pitch = 0 || 1 || -1 || 2) {
+    // discoball.position.x = 0;
+    console.log("beweeg ni muttn");
+  } else {
+    console.log("beweegt wel hoer");
+  }
+
+  if (roll = 0 || 1 || -1 || 2) {
+    console.log("beweeg ni muttn");
+  } else {
+    console.log("beweegt wel hoer");
+  }
+
   // discoball.rotation.x = pitch;
   // discoball.rotation.z = roll;
 
@@ -279,30 +334,34 @@ const loop = () => {
 
 const createFacts = songs => {
   const geometry = new THREE.BoxGeometry(100, 20, 5);
-  const material = new THREE.MeshBasicMaterial({ color: '#FFFFFF' });
+  const material = new THREE.MeshBasicMaterial({
+    color: "#FFFFFF"
+  });
   const cube = new THREE.Mesh(geometry, material);
   cube.position.y = 60;
 
   console.log(cube);
   scene.add(cube);
 
-  console.log(songs.songs[0].facts[0])
+  console.log(songs.songs[0].facts[0]);
   fact.textContent = songs.songs[0].facts[0].fact01;
 };
 
 const parse = songs => {
   createFacts(songs);
   console.log(songs);
-}
+};
 
 const init = () => {
   Arduino.setup();
   accelerometer();
 
+  $audio.src = songs[1];
+
   const data = `assets/json/data.json`;
   fetch(data)
     .then(r => r.json())
-    .then(parse)
+    .then(parse);
 
   createScene();
   createDiscoball();
@@ -340,7 +399,6 @@ const accelerometer = () => {
       // console.log("--------------------------------------");
 
       pitch = this.pitch;
-      // console.log(pitch);
       roll = this.roll;
     });
   });

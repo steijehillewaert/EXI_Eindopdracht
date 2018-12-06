@@ -35,10 +35,19 @@
       font-size: 1.5rem;
       font-weight: bold;
     }
+
+    audio {
+      z-index: 99999999;
+    }
   </style>
 </head>
 
 <body>
+  <iframe src="assets/songs/boogie_wonderland.mp3" allow="autoplay" id="audio" style="display:none"></iframe>
+  <!-- <audio autoplay>
+    <source src="assets/songs/boogie_wonderland.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio> -->
   <div>
     <div id="fact"></div>
     <div id="world"></div>
