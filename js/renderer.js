@@ -4,7 +4,7 @@
 const Arduino = require(`./classes/Arduino.js`);
 
 const THREE = require(`three`);
-// const kaas = require(`./classes/Discoball.js`);
+const Discoball = require(`./classes/Discoball.js`);
 const FBXLoader = require("three-fbx-loader");
 const TextureLoader = new THREE.TextureLoader();
 
@@ -214,22 +214,8 @@ const handleWindowResize = () => {
 
 const createDiscoball = () => {
   //nieuwe discobal
-  const geo = new THREE.SphereGeometry(70, 30, 20);
-  const mat = new THREE.MeshPhongMaterial({
-    emissive: "#222",
-    shininess: 50,
-    reflectivity: 3.5,
-    shading: THREE.FlatShading,
-    specular: "white",
-    color: "gray",
-    side: THREE.DoubleSide,
-    envMap: cubeCamera.renderTarget.texture,
-    combine: THREE.AddOperation
-  });
-  discoball = new THREE.Mesh(geo, mat);
-  discoball.scale.set(0.1, 0.1, 0.1);
-  discoball.position.y = 11;
-  scene.add(discoball);
+
+  scene.add(Discoball.mesh);
 };
 
 const createPlayer = () => {
@@ -261,20 +247,14 @@ const loop = () => {
 
   plaat1.rotation.y += 0.005;
 
-  // discoball.position.x = 0;
-  // discoball.position.z = 0;
-
   stars.rotation.y += 0.0005;
 
-  // discoball.position.x = pitch;
-  // discoball.position.z = roll;
-
-  discoball.position.x = THREE.Math.mapLinear(pitch, -20, 20, -20, 10);
-  discoball.position.z = THREE.Math.mapLinear(roll, 20, -20, 65, 45);
 
 
-  // discoball.rotation.x = pitch;
-  // discoball.rotation.z = roll;
+  Discoball.mesh.position.x = THREE.Math.mapLinear(pitch, -20, 20, -20, 10);
+  Discoball.mesh.position.z = THREE.Math.mapLinear(roll, 20, -20, 65, 45);
+
+  console.log(Discoball.mesh.position.x);
 
   //move dico lights -> PARTYYYY
   const time = Date.now() * 0.0025;
@@ -304,11 +284,11 @@ const loop = () => {
   light7.position.z = Math.cos(time * 0.5) * d;
 
   //Update the render target cube
-  discoball.visible = false;
-  cubeCamera.position.copy(discoball.position);
+  Discoball.visible = false;
+  cubeCamera.position.copy(Discoball.mesh.position);
   cubeCamera.updateCubeMap(renderer, scene);
 
-  discoball.visible = true;
+  Discoball.visible = true;
   renderer.render(scene, camera);
 };
 
