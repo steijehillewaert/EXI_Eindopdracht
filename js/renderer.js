@@ -14,7 +14,10 @@ const fact = document.querySelector(`#fact`);
 
 const songs = [
   "assets/songs/boogie_wonderland.mp3",
-  "assets/songs/september.mp3"
+  "assets/songs/disco_inferno.mp3",
+  "assets/songs/le_feak.mp3",
+  "assets/songs/september.mp3",
+  "assets/songs/stayin_alive.mp3"
 ];
 
 const $audio = document.querySelector(`#audio`);
@@ -223,6 +226,8 @@ const createPlayer = () => {
     );
 
     plaat1.material.map = texture;
+    texture.offset.x = .1;
+    //texture.offset.y = ;
 
     recordplayer = object;
 
@@ -290,7 +295,7 @@ const loop = () => {
 const createFacts = songs => {
   const geometry = new THREE.BoxGeometry(100, 20, 5);
   const material = new THREE.MeshBasicMaterial({
-    color: "#FFFFFF"
+    color: "maroon"
   });
   const cube = new THREE.Mesh(geometry, material);
   cube.position.y = 60;
