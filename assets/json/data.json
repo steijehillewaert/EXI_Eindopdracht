@@ -1,11 +1,9 @@
 {
-    "songs": [
-        {
+    "songs": [{
             "title": "Boogie Wonderland",
             "artist": "Earth, Wind & Fire",
             "path": "boogie_wonderland.mp3",
-            "facts": [
-                {
+            "facts": [{
                     "fact01": "Disco is een muziekstijl binnen het pop muziek genre en was het poplulairst midden jaren 70 tot begin jaren 80"
                 },
                 {
@@ -17,8 +15,7 @@
             "title": "Disco Inferno",
             "artist": "Trammps",
             "path": "disco_inferno.mp3",
-            "facts": [
-                {
+            "facts": [{
                     "fact01": "Dansen op discomuziek die je meestal in disco clubs. Het woord 'disco' is niet alleen een muziekgenre maar een een dans- en kledingstijl"
                 },
                 {
@@ -33,8 +30,7 @@
             "title": "Le Freak",
             "artist": "Chic",
             "path": "le_freak.mp3",
-            "facts": [
-                {
+            "facts": [{
                     "fact01": "Ze schreven dit liedje nadat ze een club niet binnen mochten, ookal werd hun muziek hier vaak gedraaid"
                 },
                 {
@@ -46,8 +42,7 @@
             "title": "September",
             "artist": "Earth, Wind & Fire",
             "path": "september.mp3",
-            "facts": [
-                {
+            "facts": [{
                     "fact01": "Tijdens WO2 werden Jazz clubs verboden in Parijs, de mensen zette daarom hun feestjes stiekem verder in ondergrondse clubs"
                 },
                 {
@@ -59,8 +54,7 @@
             "title": "Stayin' Alive",
             "artist": "Bee Gees",
             "path": "stayin_alive.mp3",
-            "facts": [
-                {
+            "facts": [{
                     "fact01": "Een van de leden was kampioen paintball speler, hij had zijn eigen team genaamd 'The Royal Rat Rangers'"
                 },
                 {

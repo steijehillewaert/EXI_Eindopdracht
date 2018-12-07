@@ -6,13 +6,11 @@ const Arduino = require(`./classes/Arduino.js`);
 const THREE = require(`three`);
 const Discoball = require(`./classes/Discoball.js`);
 const FBXLoader = require("three-fbx-loader");
-const TextureLoader = new THREE.TextureLoader();
+// const TextureLoader = new THREE.TextureLoader();
 
 const FBX = new FBXLoader();
 
 const fact = document.querySelector(`#fact`);
-
-
 
 const songs = [
   "assets/songs/boogie_wonderland.mp3",
@@ -34,9 +32,7 @@ let scene,
   WIDTH,
   renderer;
 
-let mixer;
-
-let discoball, recordplayer;
+let recordplayer;
 
 let pitch, roll;
 
@@ -218,8 +214,9 @@ const createDiscoball = () => {
 
 const createPlayer = () => {
   FBX.load("./assets/models/recordplayer.fbx", object => {
-    console.log(object);
     plaat1 = object.children[1].children[8];
+
+    console.log(plaat1);
 
     const texture = new THREE.TextureLoader().load(
       "./assets/models/tex/september2.png"
@@ -247,10 +244,10 @@ const loop = () => {
 
   stars.rotation.y += 0.0005;
 
-
-
   Discoball.mesh.position.x = THREE.Math.mapLinear(pitch, -20, 20, -20, 10);
   Discoball.mesh.position.z = THREE.Math.mapLinear(roll, 20, -20, 65, 45);
+
+  Discoball.mesh.rotation.x = pitch;
 
   console.log(Discoball.mesh.position.x);
 
@@ -333,7 +330,7 @@ const accelerometer = () => {
   const five = require("johnny-five");
   const board = new five.Board();
 
-  board.on("ready", function () {
+  board.on("ready", function() {
     const accelerometer = new five.Accelerometer({
       controller: "MMA7361",
       pins: ["A5", "A4", "A3"],
@@ -344,7 +341,7 @@ const accelerometer = () => {
       // zeroV: [4, -8, 0]
     });
 
-    accelerometer.on("change", function () {
+    accelerometer.on("change", function() {
       // console.log("accelerometer");
       // console.log("  x            : ", Math.round(this.x));
       // console.log("  y            : ", Math.round(this.y));
