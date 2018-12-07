@@ -37,7 +37,10 @@ let scene,
 
 let recordplayer;
 
-let pitch, roll;
+let pitch = 0,
+  roll = 0;
+let displayedPitch = 0,
+  displayedRoll = 0;
 
 let plaat1;
 
@@ -217,16 +220,23 @@ const createDiscoball = () => {
 
 const createPlayer = () => {
   FBX.load("./assets/models/recordplayer.fbx", object => {
-    plaat1 = object.children[1].children[8];
+    plaat1 = object.children[1].getObjectByName("PlaatModel");
 
     console.log(plaat1);
 
-    const texture = new THREE.TextureLoader().load(
-      "./assets/models/tex/september2.png"
+    new THREE.TextureLoader().load(
+      "./assets/models/tex/september2.png",
+      texture => {
+        window.texture = texture;
+        // texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
+        texture.offset.x = texture.offset.y = -.5;
+        texture.repeat.x = texture.repeat.y = 2;
+        plaat1.material.map = texture;
+      }
     );
 
-    plaat1.material.map = texture;
-    texture.offset.x = .1;
+
+    // texture.offset.x = .1;
     //texture.offset.y = ;
 
     recordplayer = object;
@@ -245,14 +255,21 @@ const createPlayer = () => {
 const loop = () => {
   requestAnimationFrame(loop);
 
+  if (!plaat1) {
+    return;
+  }
+
   plaat1.rotation.y += 0.005;
 
   stars.rotation.y += 0.0005;
 
-  Discoball.mesh.position.x = THREE.Math.mapLinear(pitch, -20, 20, -20, 10);
-  Discoball.mesh.position.z = THREE.Math.mapLinear(roll, 20, -20, 65, 45);
+  displayedPitch += (pitch - displayedPitch) * 0.1;
+  displayedRoll += (roll - displayedRoll) * 0.1;
 
-  Discoball.mesh.rotation.x = pitch;
+  Discoball.mesh.position.x = THREE.Math.mapLinear(displayedPitch, -20, 20, -20, 10);
+  Discoball.mesh.position.z = THREE.Math.mapLinear(displayedRoll, 20, -20, 65, 45);
+
+  Discoball.mesh.rotation.x = displayedPitch;
 
   console.log(Discoball.mesh.position.x);
 
@@ -335,7 +352,7 @@ const accelerometer = () => {
   const five = require("johnny-five");
   const board = new five.Board();
 
-  board.on("ready", function() {
+  board.on("ready", function () {
     const accelerometer = new five.Accelerometer({
       controller: "MMA7361",
       pins: ["A5", "A4", "A3"],
@@ -346,7 +363,7 @@ const accelerometer = () => {
       // zeroV: [4, -8, 0]
     });
 
-    accelerometer.on("change", function() {
+    accelerometer.on("change", function () {
       // console.log("accelerometer");
       // console.log("  x            : ", Math.round(this.x));
       // console.log("  y            : ", Math.round(this.y));
