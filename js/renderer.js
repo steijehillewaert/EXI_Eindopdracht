@@ -226,6 +226,7 @@ const createDiscoball = () => {
 const createPlayer = () => {
   FBX.load("./assets/models/recordplayer.fbx", object => {
     plaat1 = object.children[1].getObjectByName("Plaat");
+    plaat2 = object.children[1].getObjectByName("Plaat_1");
 
     console.log(object);
 
@@ -251,30 +252,23 @@ const createPlayer = () => {
       }
     );
 
+    new THREE.TextureLoader().load(
+      "./assets/models/tex/boogie_wonderland.png",
+      texture => {
+        plaat2.material.map = texture;
+      }
+    );
+
     // texture.offset.x = .1;
     //texture.offset.y = ;
 
     recordplayer = object;
-
-    recordplayer.traverse(function (child) {
-
-      if (child.isMesh) {
-
-        child.castShadow = true;
-        child.receiveShadow = true;
-
-      }
-
-    });
 
     recordplayer.castShadow = true;
     recordplayer.receiveShadow = true;
 
     recordplayer.scale.set(8, 8, 8);
     scene.add(recordplayer);
-
-    // mixer = new THREE.AnimationMixer(recordplayer);
-    // mixer.clipAction(object.animations[0]).play();
   });
 };
 
