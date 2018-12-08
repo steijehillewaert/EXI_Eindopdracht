@@ -3,14 +3,19 @@
 // All of the Node.js APIs are available in this process.
 const Arduino = require(`./classes/Arduino.js`);
 
+
+
 const THREE = require(`three`);
 const Discoball = require(`./classes/Discoball.js`);
-const FBXLoader = require("three-fbx-loader");
-// const TextureLoader = new THREE.TextureLoader();
+const FBXLoader = require('three-fbxloader-offical');
 
 const FBX = new FBXLoader();
 
 const fact = document.querySelector(`#fact`);
+
+const clock = new THREE.Clock();
+
+let mixers = [];
 
 const songs = [
   "assets/songs/boogie_wonderland.mp3",
@@ -220,7 +225,18 @@ const createDiscoball = () => {
 
 const createPlayer = () => {
   FBX.load("./assets/models/recordplayer.fbx", object => {
-    plaat1 = object.children[1].getObjectByName("PlaatModel");
+    plaat1 = object.children[1].getObjectByName("Plaat");
+
+    console.log(object);
+
+    object.mixer = new THREE.AnimationMixer(object);
+    mixers.push(object.mixer);
+
+    const action = object.mixer.clipAction(object.animations[0]);
+
+    console.log(action);
+
+    action.play();
 
     console.log(plaat1);
 
@@ -229,17 +245,27 @@ const createPlayer = () => {
       texture => {
         window.texture = texture;
         // texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
-        texture.offset.x = texture.offset.y = -.5;
+        texture.offset.x = texture.offset.y = -0.5;
         texture.repeat.x = texture.repeat.y = 2;
         plaat1.material.map = texture;
       }
     );
 
-
     // texture.offset.x = .1;
     //texture.offset.y = ;
 
     recordplayer = object;
+
+    recordplayer.traverse(function (child) {
+
+      if (child.isMesh) {
+
+        child.castShadow = true;
+        child.receiveShadow = true;
+
+      }
+
+    });
 
     recordplayer.castShadow = true;
     recordplayer.receiveShadow = true;
@@ -255,6 +281,12 @@ const createPlayer = () => {
 const loop = () => {
   requestAnimationFrame(loop);
 
+  if (mixers.length > 0) {
+    for (let i = 0; i < mixers.length; i++) {
+      mixers[i].update(clock.getDelta());
+    }
+  }
+
   if (!plaat1) {
     return;
   }
@@ -266,8 +298,20 @@ const loop = () => {
   displayedPitch += (pitch - displayedPitch) * 0.1;
   displayedRoll += (roll - displayedRoll) * 0.1;
 
-  Discoball.mesh.position.x = THREE.Math.mapLinear(displayedPitch, -20, 20, -20, 10);
-  Discoball.mesh.position.z = THREE.Math.mapLinear(displayedRoll, 20, -20, 65, 45);
+  Discoball.mesh.position.x = THREE.Math.mapLinear(
+    displayedPitch,
+    -20,
+    20,
+    -20,
+    10
+  );
+  Discoball.mesh.position.z = THREE.Math.mapLinear(
+    displayedRoll,
+    20,
+    -20,
+    65,
+    45
+  );
 
   Discoball.mesh.rotation.x = displayedPitch;
 
@@ -321,7 +365,7 @@ const createFacts = songs => {
   scene.add(cube);
 
   console.log(songs.songs[0].facts[0]);
-  fact.textContent = songs.songs[0].facts[0].fact01;
+  // fact.textContent = songs.songs[0].facts[0].fact01;
 };
 
 const parse = songs => {

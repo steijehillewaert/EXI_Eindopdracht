@@ -3799,6 +3799,11 @@ three-fbx-loader@^1.0.3:
     pako "^1.0.6"
     three "^0.89.0"
 
+three-fbxloader-offical@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/three-fbxloader-offical/-/three-fbxloader-offical-1.0.0.tgz#db7d684ee65174b3044dd96e479519952520f4d7"
+  integrity sha512-MPEznEBZzJA2PMNPRGJzZ95BjDcZ75FQurAjsQeZuEErA1qbSLpQM/n1jceJUAOGASbeQ7V/ABS3zx6tOTtXKQ==
+
 three-gltf-loader@^1.98.0:
   version "1.98.0"
   resolved "https://registry.yarnpkg.com/three-gltf-loader/-/three-gltf-loader-1.98.0.tgz#ed575a910ca5864bf44a64b84f8ec08d741e9399"

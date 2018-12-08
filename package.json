@@ -36,6 +36,7 @@
     "serialport": "^7.0.2",
     "three": "^0.98.0",
     "three-fbx-loader": "^1.0.3",
+    "three-fbxloader-offical": "^1.0.0",
     "three-gltf-loader": "^1.98.0"
   }
 }
