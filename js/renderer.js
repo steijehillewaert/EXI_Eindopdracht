@@ -90,7 +90,7 @@ const createScene = () => {
 
 const createDiscoLights = () => {
   //lights
-  ambientLight = new THREE.AmbientLight(0xffffff);
+  ambientLight = new THREE.AmbientLight(0xffffff, .5);
   scene.add(ambientLight);
 
   light = new THREE.PointLight(0xfffbe3);
@@ -191,7 +191,8 @@ createStars = () => {
   const starAmt = 10000;
   const starMat = {
     size: 1.0,
-    opacity: 0.7
+    opacity: 0.7,
+    color: "#F852FC"
   };
   const starMesh = new THREE.PointsMaterial(starMat);
 
@@ -311,11 +312,13 @@ const loop = () => {
 
 const createFacts = songs => {
   const geometry = new THREE.BoxGeometry(100, 20, 5);
-  const material = new THREE.MeshBasicMaterial({
-    color: "maroon"
+  const material = new THREE.MeshPhongMaterial({
+    color: "#02022C"
   });
   const cube = new THREE.Mesh(geometry, material);
   cube.position.y = 60;
+  cube.castShadow = true;
+  cube.receiveShadow = true;
 
   console.log(cube);
   scene.add(cube);
