@@ -3,69 +3,45 @@
             "title": "Boogie Wonderland",
             "artist": "Earth, Wind & Fire",
             "path": "boogie_wonderland.mp3",
-            "facts": [{
-                    "fact01": "Disco is een muziekstijl binnen het pop muziek genre en was het poplulairst midden jaren 70 tot begin jaren 80"
-                },
-                {
-                    "fact02": "Boogie Wonderland wordt gespeeld in de films Roller Boogie, Caddyshack, Madagascar en Happy Feet"
-                }
+            "facts": ["Disco is een muziekstijl binnen het pop muziek genre en was het poplulairst midden jaren 70 tot begin jaren 80",
+                "Boogie Wonderland wordt gespeeld in de films Roller Boogie, Caddyshack, Madagascar en Happy Feet"
             ]
         },
         {
             "title": "Disco Inferno",
             "artist": "Trammps",
             "path": "disco_inferno.mp3",
-            "facts": [{
-                    "fact01": "Dansen op discomuziek die je meestal in disco clubs. Het woord 'disco' is niet alleen een muziekgenre maar een een dans- en kledingstijl"
-                },
-                {
-                    "fact02": "De Trammps waren geïnspireerd door een filmscène waarbij een disco bovenop een gebouw in brand stond"
-                },
-                {
-                    "fact03": "Zelfs Cookie Monster uit de Muppets schitterde in typische disco kledij, namelijk een funky wit pak"
-                }
+            "facts": [
+                "Dansen op discomuziek die je meestal in disco clubs. Het woord 'disco' is niet alleen een muziekgenre maar een een dans- en kledingstijl",
+                "De Trammps waren geïnspireerd door een filmscène waarbij een disco bovenop een gebouw in brand stond",
+                "Zelfs Cookie Monster uit de Muppets schitterde in typische disco kledij, namelijk een funky wit pak"
             ]
         },
         {
             "title": "Le Freak",
             "artist": "Chic",
             "path": "le_freak.mp3",
-            "facts": [{
-                    "fact01": "Ze schreven dit liedje nadat ze een club niet binnen mochten, ookal werd hun muziek hier vaak gedraaid"
-                },
-                {
-                    "fact02": "Ookal was 'Le Freak' een grote hit, stiekem hoorden ze het zelf niet graag"
-                }
+            "facts": ["Ze schreven dit liedje nadat ze een club niet binnen mochten, ookal werd hun muziek hier vaak gedraaid",
+                "Ookal was 'Le Freak' een grote hit, stiekem hoorden ze het zelf niet graag"
             ]
         },
         {
             "title": "September",
             "artist": "Earth, Wind & Fire",
             "path": "september.mp3",
-            "facts": [{
-                    "fact01": "Tijdens WO2 werden Jazz clubs verboden in Parijs, de mensen zette daarom hun feestjes stiekem verder in ondergrondse clubs"
-                },
-                {
-                    "fact02": "Een hotel kamer, jankende katten, buiten een luid protest...maar dit hield Maurice White niet tegen dit liedje te schrijven"
-                }
+            "facts": ["Tijdens WO2 werden Jazz clubs verboden in Parijs, de mensen zette daarom hun feestjes stiekem verder in ondergrondse clubs",
+                "Een hotel kamer, jankende katten, buiten een luid protest...maar dit hield Maurice White niet tegen dit liedje te schrijven"
             ]
         },
         {
             "title": "Stayin' Alive",
             "artist": "Bee Gees",
             "path": "stayin_alive.mp3",
-            "facts": [{
-                    "fact01": "Een van de leden was kampioen paintball speler, hij had zijn eigen team genaamd 'The Royal Rat Rangers'"
-                },
-                {
-                    "fact02": "Ze bestonden uit 3 leden, Robin en Maurice waren tweelingbroers, Barry was 3 jaar ouder"
-                },
-                {
-                    "fact03": "Toen ze nog klein waren deden ze alsof ze nieuwe liedjes moesten schrijven voor artiesten die ze op de radio hoorden"
-                },
-                {
-                    "fact04": "Het ritme van het liedje is gebaseerd op het kloppen van een hart"
-                }
+            "facts": ["Een van de leden was kampioen paintball speler, hij had zijn eigen team genaamd 'The Royal Rat Rangers'",
+                "Ze bestonden uit 3 leden, Robin en Maurice waren tweelingbroers, Barry was 3 jaar ouder",
+                "Toen ze nog klein waren deden ze alsof ze nieuwe liedjes moesten schrijven voor artiesten die ze op de radio hoorden",
+                "Het ritme van het liedje is gebaseerd op het kloppen van een hart"
+
             ]
         }
     ]
