@@ -1,7 +1,7 @@
 {
-  "name": "electron-quick-start",
+  "name": "Devinyl",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "Project for Devine@Howest",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -9,22 +9,13 @@
     "dist": "electron-builder",
     "postinstall": "electron-builder install-app-deps"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
+  "repository": "http://github.com/steijehillewaert/EXI_Eindopdracht",
   "build": {
-    "appId": "devine.be",
+    "appId": "devinyl.exi.devine.be",
     "mac": {
-      "category": "party.crasher"
+      "category": "exi"
     }
   },
-  "author": "GitHub",
-  "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^3.0.9",
     "electron-builder": "^20.38.2",
@@ -33,10 +24,7 @@
   },
   "dependencies": {
     "johnny-five": "^1.0.0",
-    "serialport": "^7.0.2",
     "three": "^0.98.0",
-    "three-fbx-loader": "^1.0.3",
-    "three-fbxloader-offical": "^1.0.0",
-    "three-gltf-loader": "^1.98.0"
+    "three-fbxloader-offical": "^1.0.0"
   }
 }
