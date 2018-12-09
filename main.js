@@ -33,7 +33,14 @@ function createWindow() {
   })
 }
 
-require('electron-reload')(__dirname)
+const isDev = require('electron-is-dev');
+
+if (isDev) {
+  console.log('Running in development');
+  require('electron-reload')(__dirname)
+} else {
+
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
