@@ -15,12 +15,14 @@ const fact = document.querySelector(`#fact`);
 
 const clock = new THREE.Clock();
 
+let songTitle, songArtist, songPath, songFact;
+
 let mixers = [];
 
 const songs = [
   "assets/songs/boogie_wonderland.mp3",
   "assets/songs/disco_inferno.mp3",
-  "assets/songs/le_feak.mp3",
+  "assets/songs/le_freak.mp3",
   "assets/songs/september.mp3",
   "assets/songs/stayin_alive.mp3"
 ];
@@ -227,8 +229,14 @@ const createPlayer = () => {
   FBX.load("./assets/models/recordplayer.fbx", object => {
     plaat1 = object.children[1].getObjectByName("Plaat");
     plaat2 = object.children[1].getObjectByName("Plaat_1");
+    basis = object.children[1].getObjectByName("Basis");
 
-    console.log(object);
+    console.log(basis.material.emissive);
+
+    basis.material.color.r = 1 / 255;
+    basis.material.color.g = 1 / 255;
+    basis.material.color.b = 1 / 255;
+    // basis.material.color("red");
 
     object.mixer = new THREE.AnimationMixer(object);
     mixers.push(object.mixer);
@@ -358,7 +366,7 @@ const createFacts = songs => {
   console.log(cube);
   scene.add(cube);
 
-  console.log(songs.songs[0].facts[0]);
+  // console.log(songs.songs[0].facts[0]);
   // fact.textContent = songs.songs[0].facts[0].fact01;
 };
 
@@ -371,7 +379,11 @@ const init = () => {
   Arduino.setup();
   accelerometer();
 
-  $audio.src = songs[1];
+  let random = Math.floor(Math.random() * 4) + 1;
+
+  console.log(random);
+
+  $audio.src = songs[random];
 
   const data = `assets/json/data.json`;
   fetch(data)
