@@ -18,7 +18,6 @@ let songTitle, songArtist, songPath, songFact;
 let mixers = [];
 
 const $audio = document.querySelector(`#audio`);
-console.log($audio);
 
 let scene,
   stars,
@@ -68,7 +67,6 @@ const createScene = () => {
 
   //cube camera
   cubeCamera = new THREE.CubeCamera(1, 100000, 1024);
-  console.log(cubeCamera);
   scene.add(cubeCamera);
 
   renderer = new THREE.WebGLRenderer({
@@ -224,8 +222,6 @@ const createPlayer = () => {
     plaat2 = object.children[1].getObjectByName("Plaat_1");
     basis = object.children[1].getObjectByName("Basis");
 
-    console.log(basis.material.emissive);
-
     basis.material.color.r = 1 / 255;
     basis.material.color.g = 1 / 255;
     basis.material.color.b = 1 / 255;
@@ -236,11 +232,7 @@ const createPlayer = () => {
 
     const action = object.mixer.clipAction(object.animations[0]);
 
-    console.log(action);
-
     action.play();
-
-    console.log(plaat1);
 
     new THREE.TextureLoader().load(
       "./assets/models/tex/september2.png",
@@ -310,8 +302,6 @@ const loop = () => {
 
   Discoball.mesh.rotation.x = displayedPitch;
 
-  // console.log(Discoball.mesh.position.x);
-
   //move dico lights -> PARTYYYY
   const time = Date.now() * 0.0025;
   const d = 100;
@@ -365,7 +355,6 @@ const playSong = songs => {
   cube.castShadow = true;
   cube.receiveShadow = true;
 
-  console.log(cube);
   scene.add(cube);
 
   fact.textContent = songs[currentSong].facts[0];
@@ -379,10 +368,6 @@ const parse = songs => {
 const init = () => {
   Arduino.setup();
   accelerometer();
-
-  let random = Math.floor(Math.random() * 4) + 1;
-
-  console.log(random);
 
   const data = `assets/json/data.json`;
   fetch(data)
