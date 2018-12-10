@@ -3,11 +3,9 @@
 // All of the Node.js APIs are available in this process.
 const Arduino = require(`./classes/Arduino.js`);
 
-
-
 const THREE = require(`three`);
 const Discoball = require(`./classes/Discoball.js`);
-const FBXLoader = require('three-fbxloader-offical');
+const FBXLoader = require("three-fbxloader-offical");
 
 const FBX = new FBXLoader();
 
@@ -91,7 +89,7 @@ const createScene = () => {
 
 const createDiscoLights = () => {
   //lights
-  ambientLight = new THREE.AmbientLight(0xffffff, .5);
+  ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
   scene.add(ambientLight);
 
   light = new THREE.PointLight(0xfffbe3);
@@ -312,7 +310,7 @@ const loop = () => {
 
   Discoball.mesh.rotation.x = displayedPitch;
 
-  console.log(Discoball.mesh.position.x);
+  // console.log(Discoball.mesh.position.x);
 
   //move dico lights -> PARTYYYY
   const time = Date.now() * 0.0025;
@@ -403,7 +401,7 @@ const accelerometer = () => {
   const five = require("johnny-five");
   const board = new five.Board();
 
-  board.on("ready", function () {
+  board.on("ready", function() {
     const accelerometer = new five.Accelerometer({
       controller: "MMA7361",
       pins: ["A5", "A4", "A3"],
@@ -414,7 +412,7 @@ const accelerometer = () => {
       // zeroV: [4, -8, 0]
     });
 
-    accelerometer.on("change", function () {
+    accelerometer.on("change", function() {
       // console.log("accelerometer");
       // console.log("  x            : ", Math.round(this.x));
       // console.log("  y            : ", Math.round(this.y));
