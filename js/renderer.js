@@ -10,10 +10,9 @@ const FBXLoader = require("three-fbxloader-offical");
 const FBX = new FBXLoader();
 
 const fact = document.querySelector(`#fact`);
+const songInfo = document.querySelector(`#song-info`);
 
 const clock = new THREE.Clock();
-
-let songTitle, songArtist, songPath, songFact;
 
 let mixers = [];
 
@@ -43,6 +42,7 @@ let plaat1;
 let ambientLight, light, light1, light2, light3, light4, light5, light6, light7;
 
 let currentSong = 0;
+let currentFact = 0;
 
 const createScene = () => {
   HEIGHT = window.innerHeight;
@@ -344,7 +344,8 @@ const playSong = songs => {
 
   scene.add(cube);
 
-  fact.textContent = songs[currentSong].facts[0];
+  fact.textContent = songs[currentSong].facts[currentFact];
+  songInfo.textContent = `${songs[currentSong].artist} - ${songs[currentSong].title}`;
 };
 
 const parse = songs => {
