@@ -217,7 +217,7 @@ const createDiscoball = () => {
 };
 
 const createPlayer = () => {
-  FBX.load("./assets/models/recordplayer.fbx", object => {
+  FBX.load("./assets/models/recordplayer2.fbx", object => {
     console.log(object);
 
     plaat1 = object.children[1].getObjectByName("PLAAT");
@@ -345,7 +345,9 @@ const playSong = songs => {
   scene.add(cube);
 
   fact.textContent = songs[currentSong].facts[currentFact];
-  songInfo.textContent = `${songs[currentSong].artist} - ${songs[currentSong].title}`;
+  songInfo.textContent = `${songs[currentSong].artist} - ${
+    songs[currentSong].title
+  }`;
 };
 
 const parse = songs => {
