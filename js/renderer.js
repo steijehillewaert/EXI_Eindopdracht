@@ -370,8 +370,7 @@ const playSong = songs => {
   console.log(cube);
   scene.add(cube);
 
-  // console.log(songs.songs[0].facts[0]);
-  // fact.textContent = songs.songs[0].facts[0].fact01;
+  fact.textContent = songs[currentSong].facts[0];
 };
 
 const parse = songs => {
