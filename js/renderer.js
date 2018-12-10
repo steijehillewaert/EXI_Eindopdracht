@@ -218,9 +218,10 @@ const createDiscoball = () => {
 
 const createPlayer = () => {
   FBX.load("./assets/models/recordplayer.fbx", object => {
-    plaat1 = object.children[1].getObjectByName("Plaat");
-    plaat2 = object.children[1].getObjectByName("Plaat_1");
-    basis = object.children[1].getObjectByName("Basis");
+    console.log(object);
+
+    plaat1 = object.children[1].getObjectByName("PLAAT");
+    basis = object.children[1].children[3].getObjectByName("Basis");
 
     basis.material.color.r = 1 / 255;
     basis.material.color.g = 1 / 255;
@@ -234,23 +235,9 @@ const createPlayer = () => {
 
     action.play();
 
-    new THREE.TextureLoader().load(
-      "./assets/models/tex/september2.png",
-      texture => {
-        window.texture = texture;
-        // texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
-        texture.offset.x = texture.offset.y = -0.5;
-        texture.repeat.x = texture.repeat.y = 2;
-        plaat1.material.map = texture;
-      }
-    );
-
-    new THREE.TextureLoader().load(
-      "./assets/models/tex/boogie_wonderland.png",
-      texture => {
-        plaat2.material.map = texture;
-      }
-    );
+    new THREE.TextureLoader().load("./assets/img/september.png", texture => {
+      plaat1.material.map = texture;
+    });
 
     // texture.offset.x = .1;
     //texture.offset.y = ;
@@ -386,7 +373,7 @@ const accelerometer = () => {
   const five = require("johnny-five");
   const board = new five.Board();
 
-  board.on("ready", function () {
+  board.on("ready", function() {
     const accelerometer = new five.Accelerometer({
       controller: "MMA7361",
       pins: ["A5", "A4", "A3"],
@@ -397,7 +384,7 @@ const accelerometer = () => {
       // zeroV: [4, -8, 0]
     });
 
-    accelerometer.on("change", function () {
+    accelerometer.on("change", function() {
       // console.log("accelerometer");
       // console.log("  x            : ", Math.round(this.x));
       // console.log("  y            : ", Math.round(this.y));
