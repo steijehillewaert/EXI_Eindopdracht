@@ -19,14 +19,6 @@ let songTitle, songArtist, songPath, songFact;
 
 let mixers = [];
 
-const songs = [
-  "assets/songs/boogie_wonderland.mp3",
-  "assets/songs/disco_inferno.mp3",
-  "assets/songs/le_freak.mp3",
-  "assets/songs/september.mp3",
-  "assets/songs/stayin_alive.mp3"
-];
-
 const $audio = document.querySelector(`#audio`);
 console.log($audio);
 
@@ -52,6 +44,8 @@ let displayedPitch = 0,
 let plaat1;
 
 let ambientLight, light, light1, light2, light3, light4, light5, light6, light7;
+
+let currentSong = 0;
 
 const createScene = () => {
   HEIGHT = window.innerHeight;
@@ -356,7 +350,14 @@ const loop = () => {
   renderer.render(scene, camera);
 };
 
-const createFacts = songs => {
+const playSong = songs => {
+  //lied
+
+  // console.log(songs[currentSong]);
+
+  $audio.src = `assets/songs/${songs[currentSong].path}`;
+
+  //fact
   const geometry = new THREE.BoxGeometry(100, 20, 5);
   const material = new THREE.MeshPhongMaterial({
     color: "#02022C"
@@ -374,7 +375,7 @@ const createFacts = songs => {
 };
 
 const parse = songs => {
-  createFacts(songs);
+  playSong(songs);
   console.log(songs);
 };
 
@@ -385,8 +386,6 @@ const init = () => {
   let random = Math.floor(Math.random() * 4) + 1;
 
   console.log(random);
-
-  $audio.src = songs[random];
 
   const data = `assets/json/data.json`;
   fetch(data)
