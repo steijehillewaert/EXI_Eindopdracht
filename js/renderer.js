@@ -46,6 +46,7 @@ let ambientLight, light, light1, light2, light3, light4, light5, light6, light7;
 
 let currentSong = 0;
 let currentFact = 0;
+let maxCurrentFact;
 
 const createScene = () => {
   HEIGHT = window.innerHeight;
@@ -328,8 +329,9 @@ const parseSongData = songsData => {
     sound.setVolume(0.5);
     sound.play();
   });
+};
 
-  //fact
+const parseFactData = songsData => {
   const geometry = new THREE.BoxGeometry(100, 20, 5);
   const material = new THREE.MeshPhongMaterial({
     color: "#02022C"
@@ -346,20 +348,34 @@ const parseSongData = songsData => {
     songsData[currentSong].title
     }`;
 
-  // const timer = window.setInterval(changeFact(songsData), 10000);
+  maxCurrentFact = songsData[currentSong].facts.length;
+  console.log(`aantal facts in array: ${maxCurrentFact}`);
+  console.log(currentFact);
+
+  //window.setInterval(changeFact(songsData), 10000);
 };
 
 // const createTimer = songsData => {
 //   const timer = window.setInterval(changeFact(songsData), 10000);
 // }
 
-const changeFact = songsData => {
-  if (currentFact > songsData[currentSong].facts.length) {
+const nextFact = () => {
+  if (currentFact === maxCurrentFact - 1) {
     currentFact = 0;
   } else {
     currentFact++;
   }
-  loadJSON();
+  parseFactData(alleFuckingData);
+  console.log("volgende fact");
+}
+const previousFact = () => {
+  if (currentFact === 0) {
+    currentFact = maxCurrentFact - 1;
+  } else {
+    currentFact--;
+  }
+  parseFactData(alleFuckingData);
+  console.log("vorige fact");
 }
 
 const parseTextureData = songsData => {
@@ -435,14 +451,25 @@ const handleKeyPressed = e => {
   if (e.keyCode === 37) {
     previousSong();
   }
+  if (e.keyCode === 38) {
+    nextFact();
+  }
+  if (e.keyCode === 40) {
+    previousFact();
+  }
 
   console.log(currentSong);
 };
 
+let alleFuckingData;
+
 const parse = songs => {
   parseSongData(songs);
   parseTextureData(songs);
-  // createTimer(songs);
+  parseFactData(songs);
+  //createTimer(songs);
+  alleFuckingData = songs;
+  console.log(alleFuckingData);
 };
 
 const init = () => {
