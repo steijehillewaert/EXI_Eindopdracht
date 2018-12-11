@@ -5,6 +5,7 @@ const Arduino = require(`./classes/Arduino.js`);
 
 const THREE = require(`three`);
 const Discoball = require(`./classes/Discoball.js`);
+const Stars = require(`./classes/Stars.js`);
 const FBXLoader = require("three-fbxloader-offical");
 
 const FBX = new FBXLoader();
@@ -15,8 +16,6 @@ const songInfo = document.querySelector(`#song-info`);
 const clock = new THREE.Clock();
 
 let mixers = [];
-
-let songsArray = [];
 
 const $audio = document.querySelector(`#audio`);
 
@@ -180,31 +179,10 @@ const createDiscoLights = () => {
     )
   );
   scene.add(light7);
-
-  //add orbital controls
-  //controls = new THREE.OrbitControls(camera);
 };
 
 createStars = () => {
-  const starGeo = new THREE.SphereGeometry(1000, 100, 50);
-  //hoeveelheid sterren
-  const starAmt = 10000;
-  const starMat = {
-    size: 1.0,
-    opacity: 0.7,
-    color: "#F852FC"
-  };
-  const starMesh = new THREE.PointsMaterial(starMat);
-
-  for (var i = 0; i < starAmt; i++) {
-    var starVertex = new THREE.Vector3();
-    starVertex.x = Math.random() * 1000 - 500;
-    starVertex.y = Math.random() * 1000 - 500;
-    starVertex.z = Math.random() * 1000 - 500;
-    starGeo.vertices.push(starVertex);
-  }
-  stars = new THREE.Points(starGeo, starMesh);
-  scene.add(stars);
+  scene.add(Stars.mesh);
 };
 
 const handleWindowResize = () => {
@@ -271,17 +249,18 @@ const loop = () => {
 
   plaat1.rotation.y += 0.005;
 
-  stars.rotation.y += 0.0005;
+  Stars.mesh.rotation.y += 0.0005;
 
   displayedPitch += (pitch - displayedPitch) * 0.1;
   displayedRoll += (roll - displayedRoll) * 0.1;
 
+  // Discoball.mesh.position.x = 25;
   Discoball.mesh.position.x = THREE.Math.mapLinear(
     displayedPitch,
     20,
     -20,
-    -20,
-    10
+    -30,
+    25
   );
   Discoball.mesh.position.z = THREE.Math.mapLinear(
     displayedRoll,
@@ -339,7 +318,7 @@ const loop = () => {
   renderer.render(scene, camera);
 };
 
-const playSong = songsData => {
+const parseSongData = songsData => {
   //lied
 
   console.log(songsData);
@@ -437,7 +416,7 @@ const handleKeyPressed = e => {
 };
 
 const parse = songs => {
-  playSong(songs);
+  parseSongData(songs);
 };
 
 const init = () => {
@@ -460,7 +439,7 @@ const accelerometer = () => {
   const five = require("johnny-five");
   const board = new five.Board();
 
-  board.on("ready", function() {
+  board.on("ready", function () {
     const accelerometer = new five.Accelerometer({
       controller: "MMA7361",
       pins: ["A5", "A4", "A3"],
@@ -471,7 +450,7 @@ const accelerometer = () => {
       // zeroV: [4, -8, 0]
     });
 
-    accelerometer.on("change", function() {
+    accelerometer.on("change", function () {
       // console.log("accelerometer");
       // console.log("  x            : ", Math.round(this.x));
       // console.log("  y            : ", Math.round(this.y));
