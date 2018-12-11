@@ -278,15 +278,15 @@ const loop = () => {
 
   Discoball.mesh.position.x = THREE.Math.mapLinear(
     displayedPitch,
-    -20,
     20,
+    -20,
     -20,
     10
   );
   Discoball.mesh.position.z = THREE.Math.mapLinear(
     displayedRoll,
-    20,
     -20,
+    20,
     65,
     45
   );
