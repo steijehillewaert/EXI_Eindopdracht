@@ -376,6 +376,42 @@ const createArrows = () => {
 
     scene.add(arrowR);
   });
+
+  if (Discoball.mesh.position.x > 30) {
+    nextSong();
+  }
+
+  if (Discoball.mesh.position.x < -30) {
+    previousSong();
+  }
+};
+
+const nextSong = () => {
+  if (currentSong != 4) {
+    currentSong += 1;
+  } else {
+    currentSong === 0;
+  }
+  playSong();
+};
+
+const previousSong = () => {
+  if (currentSong != 0) {
+    currentSong -= 1;
+  } else {
+    currentSong === 4;
+  }
+  console.log(currentSong);
+  playSong();
+};
+
+const handleKeyPressed = e => {
+  if ((e = 37)) {
+    nextSong();
+  }
+  if ((e = 39)) {
+    previousSong();
+  }
 };
 
 const parse = songs => {
