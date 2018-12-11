@@ -255,6 +255,8 @@ const createPlayer = () => {
 const loop = () => {
   requestAnimationFrame(loop);
 
+  // console.log(displayedPitch);
+
   // console.log(currentFact);
 
   if (mixers.length > 0) {
@@ -290,6 +292,16 @@ const loop = () => {
   );
 
   Discoball.mesh.rotation.x = displayedPitch;
+
+  // console.log(displayedPitch);
+
+  // if (displayedPitch > 5) {
+  //   nextSong();
+  // }
+
+  // if (displayedPitch < -3) {
+  //   previousSong();
+  // }
 
   //move dico lights -> PARTYYYY
   const time = Date.now() * 0.0025;
@@ -380,14 +392,6 @@ const createArrows = () => {
 
     scene.add(arrowR);
   });
-
-  // if (Discoball.mesh.position.x > 30) {
-  //   nextSong();
-  // }
-
-  // if (Discoball.mesh.position.x < -30) {
-  //   previousSong();
-  // }
 };
 
 const loadJSON = () => {
