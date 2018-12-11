@@ -16,6 +16,8 @@ const clock = new THREE.Clock();
 
 let mixers = [];
 
+let songsArray = [];
+
 const $audio = document.querySelector(`#audio`);
 
 let scene,
@@ -325,12 +327,12 @@ const loop = () => {
   renderer.render(scene, camera);
 };
 
-const playSong = songs => {
+const playSong = songsData => {
   //lied
 
-  // console.log(songs[currentSong]);
+  console.log(songsData);
 
-  $audio.src = `assets/songs/${songs[currentSong].path}`;
+  $audio.src = `assets/songs/${songsData[currentSong].path}`;
 
   //fact
   const geometry = new THREE.BoxGeometry(100, 20, 5);
@@ -344,10 +346,10 @@ const playSong = songs => {
 
   scene.add(cube);
 
-  fact.textContent = songs[currentSong].facts[currentFact];
-  songInfo.textContent = `${songs[currentSong].artist} - ${
-    songs[currentSong].title
-    }`;
+  fact.textContent = songsData[currentSong].facts[currentFact];
+  songInfo.textContent = `${songsData[currentSong].artist} - ${
+    songsData[currentSong].title
+  }`;
 };
 
 const createArrows = () => {
@@ -388,16 +390,23 @@ const createArrows = () => {
   // }
 };
 
+const loadJSON = () => {
+  const data = `assets/json/data.json`;
+  fetch(data)
+    .then(r => r.json())
+    .then(parse);
+};
+
 const nextSong = () => {
   if (currentSong != 4) {
     currentSong++;
   } else {
     currentSong == 0;
   }
-  playSong();
+
+  loadJSON();
 
   console.log("ik moet +1 doen");
-
 };
 
 const previousSong = () => {
@@ -406,14 +415,13 @@ const previousSong = () => {
   } else {
     currentSong === 4;
   }
-  playSong();
 
+  loadJSON();
 
-  console.log("ik moet -1 doen")
+  console.log("ik moet -1 doen");
 };
 
 const handleKeyPressed = e => {
-
   if (e.keyCode === 39) {
     nextSong();
   }
@@ -422,25 +430,18 @@ const handleKeyPressed = e => {
   }
 
   console.log(currentSong);
-
-
 };
 
 const parse = songs => {
   playSong(songs);
-  console.log(songs);
 };
 
 const init = () => {
   Arduino.setup();
   accelerometer();
 
-  const data = `assets/json/data.json`;
-  fetch(data)
-    .then(r => r.json())
-    .then(parse);
-
   createScene();
+  loadJSON();
   createDiscoball();
   createPlayer();
   createDiscoLights();
@@ -455,7 +456,7 @@ const accelerometer = () => {
   const five = require("johnny-five");
   const board = new five.Board();
 
-  board.on("ready", function () {
+  board.on("ready", function() {
     const accelerometer = new five.Accelerometer({
       controller: "MMA7361",
       pins: ["A5", "A4", "A3"],
@@ -466,7 +467,7 @@ const accelerometer = () => {
       // zeroV: [4, -8, 0]
     });
 
-    accelerometer.on("change", function () {
+    accelerometer.on("change", function() {
       // console.log("accelerometer");
       // console.log("  x            : ", Math.round(this.x));
       // console.log("  y            : ", Math.round(this.y));
