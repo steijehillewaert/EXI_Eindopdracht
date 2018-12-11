@@ -317,7 +317,7 @@ const loop = () => {
 
 const parseSongData = songsData => {
   //lied
-  console.log(songsData);
+  //console.log(songsData);
   listener = new THREE.AudioListener();
   camera.add(listener);
 
@@ -347,7 +347,22 @@ const parseSongData = songsData => {
   songInfo.textContent = `${songsData[currentSong].artist} - ${
     songsData[currentSong].title
     }`;
+
+  // const timer = window.setInterval(changeFact(songsData), 10000);
 };
+
+// const createTimer = songsData => {
+//   const timer = window.setInterval(changeFact(songsData), 10000);
+// }
+
+const changeFact = songsData => {
+  if (currentFact > songsData[currentSong].facts.length) {
+    currentFact = 0;
+  } else {
+    currentFact++;
+  }
+  loadJSON();
+}
 
 const parseTextureData = songsData => {
   new THREE.TextureLoader().load(`./assets/img/${songsData[currentSong].path}.png`, texture => {
@@ -426,6 +441,7 @@ const handleKeyPressed = e => {
 const parse = songs => {
   parseSongData(songs);
   parseTextureData(songs);
+  // createTimer(songs);
 };
 
 const init = () => {
