@@ -350,34 +350,32 @@ const playSong = songs => {
 
 const createArrows = () => {
   FBX.load("./assets/models/arrow.fbx", arrowL => {
-
     arrowL.children[1].material.color.r = 12 / 255;
     arrowL.children[1].material.color.g = 12 / 255;
     arrowL.children[1].material.color.b = 106 / 255;
 
     arrowL.castShadow = true;
     arrowL.receiveShadow = true;
-    arrowL.scale.set(.15, .15, .15);
+    arrowL.scale.set(0.15, 0.15, 0.15);
     arrowL.position.x = -70;
     arrowL.rotation.y = 180;
 
     scene.add(arrowL);
-  })
+  });
 
   FBX.load("./assets/models/arrow.fbx", arrowR => {
-
     arrowR.children[1].material.color.r = 12 / 255;
     arrowR.children[1].material.color.g = 12 / 255;
     arrowR.children[1].material.color.b = 106 / 255;
 
     arrowR.castShadow = true;
     arrowR.receiveShadow = true;
-    arrowR.scale.set(.15, .15, .15);
+    arrowR.scale.set(0.15, 0.15, 0.15);
     arrowR.position.x = 70;
     arrowR.rotation.y = -20;
 
     scene.add(arrowR);
-  })
+  });
 };
 
 const parse = songs => {
@@ -407,7 +405,7 @@ const accelerometer = () => {
   const five = require("johnny-five");
   const board = new five.Board();
 
-  board.on("ready", function () {
+  board.on("ready", function() {
     const accelerometer = new five.Accelerometer({
       controller: "MMA7361",
       pins: ["A5", "A4", "A3"],
@@ -418,7 +416,7 @@ const accelerometer = () => {
       // zeroV: [4, -8, 0]
     });
 
-    accelerometer.on("change", function () {
+    accelerometer.on("change", function() {
       // console.log("accelerometer");
       // console.log("  x            : ", Math.round(this.x));
       // console.log("  y            : ", Math.round(this.y));
