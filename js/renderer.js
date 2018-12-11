@@ -253,6 +253,8 @@ const createPlayer = () => {
 const loop = () => {
   requestAnimationFrame(loop);
 
+  // console.log(currentFact);
+
   if (mixers.length > 0) {
     for (let i = 0; i < mixers.length; i++) {
       mixers[i].update(clock.getDelta());
@@ -345,7 +347,7 @@ const playSong = songs => {
   fact.textContent = songs[currentSong].facts[currentFact];
   songInfo.textContent = `${songs[currentSong].artist} - ${
     songs[currentSong].title
-  }`;
+    }`;
 };
 
 const createArrows = () => {
@@ -377,22 +379,25 @@ const createArrows = () => {
     scene.add(arrowR);
   });
 
-  if (Discoball.mesh.position.x > 30) {
-    nextSong();
-  }
+  // if (Discoball.mesh.position.x > 30) {
+  //   nextSong();
+  // }
 
-  if (Discoball.mesh.position.x < -30) {
-    previousSong();
-  }
+  // if (Discoball.mesh.position.x < -30) {
+  //   previousSong();
+  // }
 };
 
 const nextSong = () => {
   if (currentSong != 4) {
-    currentSong += 1;
+    currentSong++;
   } else {
-    currentSong === 0;
+    currentSong == 0;
   }
   playSong();
+
+  console.log("ik moet +1 doen");
+
 };
 
 const previousSong = () => {
@@ -401,17 +406,24 @@ const previousSong = () => {
   } else {
     currentSong === 4;
   }
-  console.log(currentSong);
   playSong();
+
+
+  console.log("ik moet -1 doen")
 };
 
 const handleKeyPressed = e => {
-  if ((e = 37)) {
+
+  if (e.keyCode === 39) {
     nextSong();
   }
-  if ((e = 39)) {
+  if (e.keyCode === 37) {
     previousSong();
   }
+
+  console.log(currentSong);
+
+
 };
 
 const parse = songs => {
@@ -443,7 +455,7 @@ const accelerometer = () => {
   const five = require("johnny-five");
   const board = new five.Board();
 
-  board.on("ready", function() {
+  board.on("ready", function () {
     const accelerometer = new five.Accelerometer({
       controller: "MMA7361",
       pins: ["A5", "A4", "A3"],
@@ -454,7 +466,7 @@ const accelerometer = () => {
       // zeroV: [4, -8, 0]
     });
 
-    accelerometer.on("change", function() {
+    accelerometer.on("change", function () {
       // console.log("accelerometer");
       // console.log("  x            : ", Math.round(this.x));
       // console.log("  y            : ", Math.round(this.y));
