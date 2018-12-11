@@ -39,7 +39,7 @@ let pitch = 0,
 let displayedPitch = 0,
   displayedRoll = 0;
 
-let plaat1;
+let plaat;
 
 let ambientLight, light, light1, light2, light3, light4, light5, light6, light7;
 
@@ -201,7 +201,7 @@ const createPlayer = () => {
   FBX.load("./assets/models/recordplayer2.fbx", object => {
     console.log(object);
 
-    plaat1 = object.children[1].getObjectByName("PLAAT");
+    plaat = object.children[1].getObjectByName("PLAAT");
     basis = object.children[1].children[3].getObjectByName("Basis");
 
     basis.material.color.r = 1 / 255;
@@ -215,10 +215,6 @@ const createPlayer = () => {
     const action = object.mixer.clipAction(object.animations[0]);
 
     action.play();
-
-    new THREE.TextureLoader().load("./assets/img/september.png", texture => {
-      plaat1.material.map = texture;
-    });
 
     recordplayer = object;
 
@@ -243,11 +239,11 @@ const loop = () => {
     }
   }
 
-  if (!plaat1) {
+  if (!plaat) {
     return;
   }
 
-  plaat1.rotation.y += 0.005;
+  plaat.rotation.y += 0.005;
 
   Stars.mesh.rotation.y += 0.0005;
 
@@ -323,7 +319,7 @@ const parseSongData = songsData => {
 
   console.log(songsData);
 
-  $audio.src = `assets/songs/${songsData[currentSong].path}`;
+  $audio.src = `assets/songs/${songsData[currentSong].path}.mp3`;
 
   //fact
   const geometry = new THREE.BoxGeometry(100, 20, 5);
@@ -341,6 +337,12 @@ const parseSongData = songsData => {
   songInfo.textContent = `${songsData[currentSong].artist} - ${
     songsData[currentSong].title
   }`;
+};
+
+const parseTextureData = songsData => {
+  new THREE.TextureLoader().load(`./assets/img/${songsData[currentSong].path}.png`, texture => {
+    plaat.material.map = texture;
+  });
 };
 
 const createArrows = () => {
@@ -417,6 +419,7 @@ const handleKeyPressed = e => {
 
 const parse = songs => {
   parseSongData(songs);
+  parseTextureData(songs);
 };
 
 const init = () => {

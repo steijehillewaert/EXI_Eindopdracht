@@ -1,8 +1,7 @@
-[
-    {
+[{
         "title": "Boogie Wonderland",
         "artist": "Earth, Wind & Fire",
-        "path": "boogie_wonderland.mp3",
+        "path": "boogie_wonderland",
         "facts": [
             "Disco is een muziekstijl binnen het pop muziek genre en was het poplulairst midden jaren 70 tot begin jaren 80",
             "Boogie Wonderland wordt gespeeld in de films Roller Boogie, Caddyshack, Madagascar en Happy Feet"
@@ -11,7 +10,7 @@
     {
         "title": "Disco Inferno",
         "artist": "Trammps",
-        "path": "disco_inferno.mp3",
+        "path": "disco_inferno",
         "facts": [
             "Dansen op discomuziek die je meestal in disco clubs. Het woord 'disco' is niet alleen een muziekgenre maar een een dans- en kledingstijl",
             "De Trammps waren geïnspireerd door een filmscène waarbij een disco bovenop een gebouw in brand stond",
@@ -21,7 +20,7 @@
     {
         "title": "Le Freak",
         "artist": "Chic",
-        "path": "le_freak.mp3",
+        "path": "le_freak",
         "facts": [
             "Ze schreven dit liedje nadat ze een club niet binnen mochten, ookal werd hun muziek hier vaak gedraaid",
             "Ookal was 'Le Freak' een grote hit, stiekem hoorden ze het zelf niet graag"
@@ -30,7 +29,7 @@
     {
         "title": "September",
         "artist": "Earth, Wind & Fire",
-        "path": "september.mp3",
+        "path": "september",
         "facts": [
             "Tijdens WO2 werden Jazz clubs verboden in Parijs, de mensen zette daarom hun feestjes stiekem verder in ondergrondse clubs",
             "Een hotel kamer, jankende katten, buiten een luid protest...maar dit hield Maurice White niet tegen dit liedje te schrijven"
@@ -39,7 +38,7 @@
     {
         "title": "Stayin' Alive",
         "artist": "Bee Gees",
-        "path": "stayin_alive.mp3",
+        "path": "stayin_alive",
         "facts": [
             "Een van de leden was kampioen paintball speler, hij had zijn eigen team genaamd 'The Royal Rat Rangers'",
             "Ze bestonden uit 3 leden, Robin en Maurice waren tweelingbroers, Barry was 3 jaar ouder",
