@@ -336,7 +336,7 @@ const parseSongData = songsData => {
   fact.textContent = songsData[currentSong].facts[currentFact];
   songInfo.textContent = `${songsData[currentSong].artist} - ${
     songsData[currentSong].title
-  }`;
+    }`;
 };
 
 const parseTextureData = songsData => {
@@ -383,10 +383,10 @@ const loadJSON = () => {
 };
 
 const nextSong = () => {
-  if (currentSong != 4) {
-    currentSong++;
+  if (currentSong === 4) {
+    currentSong = 0;
   } else {
-    currentSong == 0;
+    currentSong++;
   }
 
   loadJSON();
@@ -395,10 +395,10 @@ const nextSong = () => {
 };
 
 const previousSong = () => {
-  if (currentSong != 0) {
-    currentSong -= 1;
+  if (currentSong === 0) {
+    currentSong = 4;
   } else {
-    currentSong === 4;
+    currentSong--;
   }
 
   loadJSON();
