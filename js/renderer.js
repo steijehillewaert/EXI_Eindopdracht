@@ -29,17 +29,18 @@ let scene,
   farPlane,
   HEIGHT,
   WIDTH,
-  renderer;
-
-let recordplayer;
-let arrow;
+  renderer,
+  plaat,
+  listener,
+  audioLoader,
+  sound,
+  recordplayer;
 
 let pitch = 0,
   roll = 0;
+
 let displayedPitch = 0,
   displayedRoll = 0;
-
-let plaat;
 
 let ambientLight, light, light1, light2, light3, light4, light5, light6, light7;
 
@@ -316,10 +317,19 @@ const loop = () => {
 
 const parseSongData = songsData => {
   //lied
-
   console.log(songsData);
+  listener = new THREE.AudioListener();
+  camera.add(listener);
 
-  $audio.src = `assets/songs/${songsData[currentSong].path}.mp3`;
+  sound = new THREE.Audio(listener);
+
+  audioLoader = new THREE.AudioLoader();
+  audioLoader.load(`assets/songs/${songsData[currentSong].path}.mp3`, buffer => {
+    sound.setBuffer(buffer);
+    sound.setLoop(true);
+    sound.setVolume(0.5);
+    sound.play();
+  });
 
   //fact
   const geometry = new THREE.BoxGeometry(100, 20, 5);
@@ -388,10 +398,8 @@ const nextSong = () => {
   } else {
     currentSong++;
   }
-
+  sound.stop();
   loadJSON();
-
-  console.log("ik moet +1 doen");
 };
 
 const previousSong = () => {
@@ -400,10 +408,8 @@ const previousSong = () => {
   } else {
     currentSong--;
   }
-
+  sound.stop();
   loadJSON();
-
-  console.log("ik moet -1 doen");
 };
 
 const handleKeyPressed = e => {
