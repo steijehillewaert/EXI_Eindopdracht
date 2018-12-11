@@ -399,6 +399,8 @@ const init = () => {
   createStars();
   createArrows();
   loop();
+
+  document.addEventListener("keydown", handleKeyPressed);
 };
 
 const accelerometer = () => {
