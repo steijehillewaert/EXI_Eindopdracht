@@ -17,7 +17,7 @@ const clock = new THREE.Clock();
 
 let mixers = [];
 
-const $audio = document.querySelector(`#audio`);
+let action;
 
 let scene,
   stars,
@@ -213,9 +213,7 @@ const createPlayer = () => {
     object.mixer = new THREE.AnimationMixer(object);
     mixers.push(object.mixer);
 
-    const action = object.mixer.clipAction(object.animations[0]);
-
-    action.play();
+    action = object.mixer.clipAction(object.animations[0]);
 
     recordplayer = object;
 
@@ -251,14 +249,14 @@ const loop = () => {
   displayedPitch += (pitch - displayedPitch) * 0.1;
   displayedRoll += (roll - displayedRoll) * 0.1;
 
-  // Discoball.mesh.position.x = 25;
+  // Discoball.mesh.position.x = -25;
   Discoball.mesh.position.x = THREE.Math.mapLinear(
     displayedPitch,
     20,
-    -20,
-    -30,
-    25
-  );
+    -6,
+    -25,
+    45
+  ) - 35;
   Discoball.mesh.position.z = THREE.Math.mapLinear(
     displayedRoll,
     -20,
@@ -271,13 +269,13 @@ const loop = () => {
 
   // console.log(displayedPitch);
 
-  // if (displayedPitch > 5) {
-  //   nextSong();
-  // }
+  if (displayedPitch >= 9) {
+    nextSong();
+  }
 
-  // if (displayedPitch < -3) {
-  //   previousSong();
-  // }
+  if (displayedPitch <= -8) {
+    previousSong();
+  }
 
   //move dico lights -> PARTYYYY
   const time = Date.now() * 0.0025;
@@ -399,6 +397,8 @@ const nextSong = () => {
     currentSong++;
   }
   sound.stop();
+  action.play();
+  console.log(action);
   loadJSON();
 };
 
@@ -409,6 +409,7 @@ const previousSong = () => {
     currentSong--;
   }
   sound.stop();
+  action.play();
   loadJSON();
 };
 
