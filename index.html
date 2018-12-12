@@ -54,7 +54,7 @@
     }
 
     .loading-screen {
-      background: white;
+      background-color: #090516;
       width: 100vw;
       height: 100vh;
       position: relative;
@@ -63,12 +63,56 @@
     .hide {
       display: none;
     }
+
+    @keyframes rotation {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .bol-logo {
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      background-image: url('assets/img/logo_bol.png');
+      background-size: 16.5%;
+      background-position: center;
+      background-repeat: no-repeat;
+      animation: 4s linear infinite rotation;
+    }
+
+    .bottom-logo {
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      background-repeat: no-repeat;
+      background-image: url('assets/img/logo_back.png');
+      background-size: 35%;
+      background-position: center;
+    }
+
+    .top-logo {
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      background-repeat: no-repeat;
+      background-image: url('assets/img/logo_top.png'), url('assets/img/logo_middle.png');
+      background-size: 42%, 35%;
+      background-position: center 9rem, center;
+    }
   </style>
 </head>
 
 <body>
   <div>
     <div class="loading-screen">
+      <div class="bottom-logo"></div>
+      <div class="bol-logo"></div>
+      <div class="top-logo"></div>
       <h1>Loading Screen</h1>
     </div>
     <div class="fact-container">
