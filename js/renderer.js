@@ -9,7 +9,7 @@ const Stars = require(`./classes/Stars.js`);
 const FBXLoader = require("three-fbxloader-offical");
 const Tuna = require("tunajs");
 
-const $loadingscreen = document.querySelector(`.loading-screen`);
+//const $loadingscreen = document.querySelector(`.loading-screen`);
 
 const FBX = new FBXLoader();
 
@@ -43,7 +43,8 @@ let scene,
   listener,
   audioLoader,
   sound,
-  recordplayer;
+  recordplayer,
+  data;
 
 let pitch = 0,
   roll = 0;
@@ -293,8 +294,6 @@ const loop = () => {
     console.log(phaser.bypass);
   }
 
-
-
   if (displayedPitch >= 2 || displayedRoll >= 2) {
     $loadingscreen.classList.add(`hide`);
     phaser.bypass = false;
@@ -305,10 +304,12 @@ const loop = () => {
   if (displayedPitch >= 9) {
     // nextSong();
     window.setTimeout(nextSong, 1000);
+    animateDiscobal();
   }
 
   if (displayedPitch <= -8) {
     previousSong();
+    animateDiscobal();
   }
 
   //move dico lights -> PARTYYYY
@@ -424,12 +425,8 @@ const parseFactData = songsData => {
   console.log(`aantal facts in array: ${maxCurrentFact}`);
   console.log(currentFact);
 
-  //window.setInterval(changeFact(songsData), 10000);
+  window.setTimeout(nextFact, 10000);
 };
-
-// const createTimer = songsData => {
-//   const timer = window.setInterval(changeFact(songsData), 10000);
-// }
 
 const nextFact = () => {
   if (currentFact === maxCurrentFact - 1) {
@@ -438,17 +435,8 @@ const nextFact = () => {
     currentFact++;
   }
 
-  parseFactData(alleFuckingData);
+  parseFactData(data);
   console.log("volgende fact");
-}
-const previousFact = () => {
-  if (currentFact === 0) {
-    currentFact = maxCurrentFact - 1;
-  } else {
-    currentFact--;
-  }
-  parseFactData(alleFuckingData);
-  console.log("vorige fact");
 }
 
 const parseTextureData = songsData => {
@@ -522,6 +510,16 @@ const previousSong = () => {
   loadJSON();
 };
 
+const animateDiscobal = () => {
+  if (Discoball.mesh.position.y > -15) {
+    Discoball.mesh.position.y--;
+    //Discoball.mesh.--;
+  } else {
+    Discoball.mesh.position.y = 11;
+    Discoball.mesh.position.x = 0;
+  }
+};
+
 const handleKeyPressed = e => {
   if (e.keyCode === 39) {
     nextSong();
@@ -532,25 +530,20 @@ const handleKeyPressed = e => {
   if (e.keyCode === 38) {
     nextFact();
   }
-  if (e.keyCode === 40) {
-    previousFact();
-  }
 
-  if (e.keyCode === 13) {
-    console.log("Sesame open ur gates xxx");
-    $loadingscreen.classList.add(`hide`);
-  }
+  // if (e.keyCode === 13) {
+  //   console.log("Sesame open ur gates xxx");
+  //   $loadingscreen.classList.add(`hide`);
+  // }
 };
-
-let alleFuckingData;
 
 const parse = songs => {
   parseSongData(songs);
   parseTextureData(songs);
   parseFactData(songs);
   //createTimer(songs);
-  alleFuckingData = songs;
-  console.log(alleFuckingData);
+  data = songs;
+  console.log(data);
 };
 
 const init = () => {
