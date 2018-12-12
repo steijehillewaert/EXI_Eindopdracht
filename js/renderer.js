@@ -8,6 +8,8 @@ const Discoball = require(`./classes/Discoball.js`);
 const Stars = require(`./classes/Stars.js`);
 const FBXLoader = require("three-fbxloader-offical");
 
+const $loadingscreen = document.querySelector(`.loading-screen`);
+
 const FBX = new FBXLoader();
 
 const fact = document.querySelector(`#fact`);
@@ -270,8 +272,13 @@ const loop = () => {
 
   // console.log(displayedPitch);
 
+  if (displayedPitch >= 2) {
+    $loadingscreen.classList.add(`hide`);
+  }
+
   if (displayedPitch >= 9) {
-    nextSong();
+    // nextSong();
+    window.setTimeout(nextSong, 1000);
   }
 
   if (displayedPitch <= -8) {
@@ -385,11 +392,6 @@ const nextFact = () => {
     currentFact++;
   }
 
-  window.setTimeout(() => {
-    console.log('ik wacht')
-  }, 500);
-
-
   parseFactData(alleFuckingData);
   console.log("volgende fact");
 }
@@ -452,6 +454,8 @@ const nextSong = () => {
   } else {
     currentSong++;
   }
+
+  console.log(`ik ga naar de volgende song`);
   sound.stop();
   action.play();
   console.log(action);
@@ -486,6 +490,12 @@ const handleKeyPressed = e => {
   if (e.keyCode === 77) {
     console.log(`unmute`);
     sound.setVolume(0.5);
+  }
+
+  if (e.keyCode === 13) {
+    console.log("Sesame open ur gates xxx");
+    $loadingscreen.classList.add(`hide`);
+
   }
 };
 
@@ -536,8 +546,8 @@ const accelerometer = () => {
       // console.log("  x            : ", Math.round(this.x));
       // console.log("  y            : ", Math.round(this.y));
       // console.log("  z            : ", Math.round(this.z));
-      console.log("  links/rechts        : ", Math.round(this.pitch));
-      console.log("  Voor/achter         : ", Math.round(this.roll));
+      // console.log("  links/rechts        : ", Math.round(this.pitch));
+      // console.log("  Voor/achter         : ", Math.round(this.roll));
       // console.log("  acceleration : ", this.acceleration);
       // console.log("  inclination  : ", this.inclination);
       // console.log("  orientation  : ", this.orientation);
