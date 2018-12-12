@@ -21,6 +21,8 @@ let mixers = [];
 
 let action;
 
+const time = Date.now() * 0.0025;
+
 let scene,
   stars,
   camera,
@@ -270,9 +272,25 @@ const loop = () => {
 
   Discoball.mesh.rotation.x = displayedPitch;
 
-  // console.log(displayedPitch);
+  console.log(displayedRoll);
 
-  if (displayedPitch >= 2) {
+  // window.setTimeout()
+
+  // if (displayedPitch <= 2) {
+  //   window.setTimeout(hide, 5000);
+  //   console.log(`niemand op de balans`);
+  // }
+
+  if (displayedPitch <= 1 && displayedRoll <= 1) {
+    console.log("niemand staat op het bord");
+    // console.log($loadingscreen.classList)
+    $loadingscreen.classList.remove(`hide`);
+
+  }
+
+
+
+  if (displayedPitch >= 2 || displayedRoll >= 2) {
     $loadingscreen.classList.add(`hide`);
   }
 
@@ -286,7 +304,6 @@ const loop = () => {
   }
 
   //move dico lights -> PARTYYYY
-  const time = Date.now() * 0.0025;
   const d = 100;
   light2.position.x = Math.cos(time * 0.3) * d;
   light2.position.y = Math.cos(time * 0.1) * d;
@@ -332,8 +349,7 @@ const parseSongData = songsData => {
   audioLoader.load(`assets/songs/${songsData[currentSong].path}.mp3`, buffer => {
     sound.setBuffer(buffer);
     sound.setLoop(true);
-    // sound.setVolume(0.5);
-    sound.setVolume(0);
+    sound.setVolume(0.5);
     sound.play();
   });
 };
@@ -487,11 +503,6 @@ const handleKeyPressed = e => {
     previousFact();
   }
 
-  if (e.keyCode === 77) {
-    console.log(`unmute`);
-    sound.setVolume(0.5);
-  }
-
   if (e.keyCode === 13) {
     console.log("Sesame open ur gates xxx");
     $loadingscreen.classList.add(`hide`);
@@ -535,10 +546,10 @@ const accelerometer = () => {
       controller: "MMA7361",
       pins: ["A5", "A4", "A3"],
       sleepPin: 13,
-      autoCalibrate: true
+      // autoCalibrate: true,
       // override the zeroV values if you know what
       // they are from a previous autoCalibrate
-      // zeroV: [4, -8, 0]
+      zeroV: [349.7, 396.2, 287.5]
     });
 
     accelerometer.on("change", function () {
@@ -552,6 +563,8 @@ const accelerometer = () => {
       // console.log("  inclination  : ", this.inclination);
       // console.log("  orientation  : ", this.orientation);
       // console.log("--------------------------------------");
+
+      // console.log(this.zeroV);
 
       pitch = this.pitch;
       roll = this.roll;
