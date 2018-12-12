@@ -9,7 +9,7 @@ const Stars = require(`./classes/Stars.js`);
 const FBXLoader = require("three-fbxloader-offical");
 const Tuna = require("tunajs");
 
-//const $loadingscreen = document.querySelector(`.loading-screen`);
+const $loadingscreen = document.querySelector(`.loading-screen`);
 
 const FBX = new FBXLoader();
 
@@ -296,6 +296,8 @@ const loop = () => {
 
   if (displayedPitch >= 2 || displayedRoll >= 2) {
     $loadingscreen.classList.add(`hide`);
+
+
     phaser.bypass = false;
 
     console.log(phaser.bypass);
