@@ -326,7 +326,8 @@ const parseSongData = songsData => {
   audioLoader.load(`assets/songs/${songsData[currentSong].path}.mp3`, buffer => {
     sound.setBuffer(buffer);
     sound.setLoop(true);
-    sound.setVolume(0.5);
+    // sound.setVolume(0.5);
+    sound.setVolume(0);
     sound.play();
   });
 };
@@ -365,6 +366,12 @@ const nextFact = () => {
   } else {
     currentFact++;
   }
+
+  window.setTimeout(() => {
+    console.log('ik wacht')
+  }, 500);
+
+
   parseFactData(alleFuckingData);
   console.log("volgende fact");
 }
@@ -458,7 +465,10 @@ const handleKeyPressed = e => {
     previousFact();
   }
 
-  console.log(currentSong);
+  if (e.keyCode === 77) {
+    console.log(`unmute`);
+    sound.setVolume(0.5);
+  }
 };
 
 let alleFuckingData;
