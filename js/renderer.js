@@ -315,7 +315,6 @@ const loop = () => {
 };
 
 const parseSongData = songsData => {
-  //lied
   //console.log(songsData);
   listener = new THREE.AudioListener();
   camera.add(listener);
@@ -331,6 +330,25 @@ const parseSongData = songsData => {
     sound.play();
   });
 };
+// const audioCtx = new THREE.AudioContext();
+// const distortion = audioCtx.createWaveShaper();
+
+// const makeDistortionCurve = (amount) => {
+//   const k = amount === 'number' ? amount : 50,
+//     n_samples = 44100,
+//     curve = new Float32Array(n_samples),
+//     deg = Math.PI / 180,
+//     i = 0,
+//     x;
+
+//   for (; i < n_samples; ++i) {
+//     x = i * 2 / n_samples - 1;
+//     curve[i] = (3 + k) * x * 20 * deg / (Math.PI + k * Math.abs(x));
+//   }
+//   return curve;
+// }
+// distortion.curve = makeDistortionCurve(400);
+// distortion.oversample = '4x';
 
 const parseFactData = songsData => {
   const geometry = new THREE.BoxGeometry(100, 20, 5);
