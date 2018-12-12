@@ -7,6 +7,7 @@ const THREE = require(`three`);
 const Discoball = require(`./classes/Discoball.js`);
 const Stars = require(`./classes/Stars.js`);
 const FBXLoader = require("three-fbxloader-offical");
+const Tuna = require("tunajs");
 
 const $loadingscreen = document.querySelector(`.loading-screen`);
 
@@ -17,9 +18,13 @@ const songInfo = document.querySelector(`#song-info`);
 
 const clock = new THREE.Clock();
 
+let rate;
+
 let mixers = [];
 
 let action;
+
+let phaser;
 
 const time = Date.now() * 0.0025;
 
@@ -233,9 +238,17 @@ const createPlayer = () => {
 const loop = () => {
   requestAnimationFrame(loop);
 
-  // console.log(displayedPitch);
+  rate = THREE.Math.mapLinear(
+    displayedRoll,
+    11,
+    -9,
+    1,
+    8
+  );
 
-  // console.log(currentFact);
+  console.log(rate);
+
+  // console.log(displayedRoll);
 
   if (mixers.length > 0) {
     for (let i = 0; i < mixers.length; i++) {
@@ -272,26 +285,21 @@ const loop = () => {
 
   Discoball.mesh.rotation.x = displayedPitch;
 
-  console.log(displayedRoll);
-
-  // window.setTimeout()
-
-  // if (displayedPitch <= 2) {
-  //   window.setTimeout(hide, 5000);
-  //   console.log(`niemand op de balans`);
-  // }
-
   if (displayedPitch <= 1 && displayedRoll <= 1) {
-    console.log("niemand staat op het bord");
+    // console.log("niemand staat op het bord");
     // console.log($loadingscreen.classList)
     $loadingscreen.classList.remove(`hide`);
-
+    phaser.bypass = true;
+    console.log(phaser.bypass);
   }
 
 
 
   if (displayedPitch >= 2 || displayedRoll >= 2) {
     $loadingscreen.classList.add(`hide`);
+    phaser.bypass = false;
+
+    console.log(phaser.bypass);
   }
 
   if (displayedPitch >= 9) {
@@ -338,40 +346,62 @@ const loop = () => {
   renderer.render(scene, camera);
 };
 
+let AC, audioContext, source, xhr;
+
 const parseSongData = songsData => {
-  //console.log(songsData);
-  listener = new THREE.AudioListener();
-  camera.add(listener);
 
-  sound = new THREE.Audio(listener);
+  AC = "AudioContext" in window ? AudioContext : "webkitAudioContext" in window ? webkitAudioContext : document.write("Web Audio not supported");
+  audioContext = new AC();
+  source = audioContext.createBufferSource();
+  xhr = new XMLHttpRequest();
 
-  audioLoader = new THREE.AudioLoader();
-  audioLoader.load(`assets/songs/${songsData[currentSong].path}.mp3`, buffer => {
-    sound.setBuffer(buffer);
-    sound.setLoop(true);
-    sound.setVolume(0.5);
-    sound.play();
-  });
+  xhr.open("GET", `assets/songs/${songsData[currentSong].path}.mp3`);
+  xhr.responseType = "arraybuffer";
+  xhr.onload = function (e) {
+    audioContext.decodeAudioData(e.target.response, function (b) {
+      source.buffer = b;
+      fuckUpAudio();
+    })
+  }
+
+  xhr.send(null);
 };
-// const audioCtx = new THREE.AudioContext();
-// const distortion = audioCtx.createWaveShaper();
 
-// const makeDistortionCurve = (amount) => {
-//   const k = amount === 'number' ? amount : 50,
-//     n_samples = 44100,
-//     curve = new Float32Array(n_samples),
-//     deg = Math.PI / 180,
-//     i = 0,
-//     x;
+const fuckUpAudio = () => {
+  //create an instance of Tuna by passing the AudioContext we use
+  var tuna = new Tuna(audioContext);
 
-//   for (; i < n_samples; ++i) {
-//     x = i * 2 / n_samples - 1;
-//     curve[i] = (3 + k) * x * 20 * deg / (Math.PI + k * Math.abs(x));
-//   }
-//   return curve;
-// }
-// distortion.curve = makeDistortionCurve(400);
-// distortion.oversample = '4x';
+  // phaser = new tuna.Phaser({
+  //   rate: rate, //0.01 to 8 is a decent range, but higher values are possible
+  //   depth: 1, //0 to 1
+  //   feedback: 0.8, //0 to 1+
+  //   stereoPhase: 180, //0 to 180
+  //   baseModulationFrequency: 1500, //500 to 1500
+  //   bypass: 0
+  // });
+  phaser = new tuna.WahWah({
+    automode: true, //true/false
+    baseFrequency: 0.5, //0 to 1
+    excursionOctaves: 2, //1 to 6
+    sweep: 0.2, //0 to 1
+    resonance: 10, //1 to 100
+    sensitivity: 0.5, //-1 to 1
+    bypass: 0
+  });
+
+
+
+  //connect the source to the Tuna delay
+
+  // console.log(source);
+
+  source.connect(phaser);
+  //connect delay as a standard web audio node to the audio context destination
+  phaser.connect(audioContext.destination);
+  //start playing!
+  source.start(audioContext.currentTime);
+}
+
 
 const parseFactData = songsData => {
   const geometry = new THREE.BoxGeometry(100, 20, 5);
@@ -471,8 +501,10 @@ const nextSong = () => {
     currentSong++;
   }
 
+  source.stop();
+
   console.log(`ik ga naar de volgende song`);
-  sound.stop();
+  // sound.stop();
   action.play();
   console.log(action);
   loadJSON();
@@ -484,7 +516,8 @@ const previousSong = () => {
   } else {
     currentSong--;
   }
-  sound.stop();
+
+  source.stop();
   action.play();
   loadJSON();
 };

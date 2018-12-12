@@ -27,6 +27,7 @@
     "electron-is-dev": "^1.0.1",
     "johnny-five": "^1.0.0",
     "three": "^0.98.0",
-    "three-fbxloader-offical": "^1.0.0"
+    "three-fbxloader-offical": "^1.0.0",
+    "tunajs": "^1.0.2"
   }
 }
