@@ -18,18 +18,17 @@ const songInfo = document.querySelector(`#song-info`);
 
 const clock = new THREE.Clock();
 
-let rate;
+let boardState = false;
 
 let mixers = [];
 
 let action;
 
-let phaser;
+let audioEffect;
 
 const time = Date.now() * 0.0025;
 
 let scene,
-  stars,
   camera,
   cubeCamera,
   fieldOfView,
@@ -40,9 +39,6 @@ let scene,
   WIDTH,
   renderer,
   plaat,
-  listener,
-  audioLoader,
-  sound,
   recordplayer,
   data;
 
@@ -239,6 +235,7 @@ const createPlayer = () => {
 const loop = () => {
   requestAnimationFrame(loop);
 
+
   rate = THREE.Math.mapLinear(
     displayedRoll,
     11,
@@ -247,7 +244,7 @@ const loop = () => {
     8
   );
 
-  console.log(rate);
+  // console.log(rate);
 
   // console.log(displayedRoll);
 
@@ -269,6 +266,7 @@ const loop = () => {
   displayedRoll += (roll - displayedRoll) * 0.1;
 
   // Discoball.mesh.position.x = -25;
+
   Discoball.mesh.position.x = THREE.Math.mapLinear(
     displayedPitch,
     20,
@@ -286,21 +284,31 @@ const loop = () => {
 
   Discoball.mesh.rotation.x = displayedPitch;
 
-  if (displayedPitch <= 1 && displayedRoll <= 1) {
-    // console.log("niemand staat op het bord");
+  if (!audioEffect) {
+    return;
+  }
+
+  // console.log(Math.round(displayedRoll));
+
+  if (Math.round(displayedPitch) === -2 || Math.round(displayedRoll) === 0 || Math.round(displayedRoll) === 1) {
+    // console.log("Board Empty");
+
+    boardState = true;
     // console.log($loadingscreen.classList)
     $loadingscreen.classList.remove(`hide`);
-    phaser.bypass = true;
-    console.log(phaser.bypass);
+    audioEffect.bypass = true;
+    // console.log(audioEffect.bypass);
+  } else {
+    boardState = false;
   }
 
   if (displayedPitch >= 2 || displayedRoll >= 2) {
     $loadingscreen.classList.add(`hide`);
 
 
-    phaser.bypass = false;
+    audioEffect.bypass = false;
 
-    console.log(phaser.bypass);
+    console.log(audioEffect.bypass);
   }
 
   if (displayedPitch >= 9) {
@@ -313,6 +321,8 @@ const loop = () => {
     previousSong();
     animateDiscobal();
   }
+
+  console.log(boardState);
 
   //move dico lights -> PARTYYYY
   const d = 100;
@@ -363,26 +373,18 @@ const parseSongData = songsData => {
   xhr.onload = function (e) {
     audioContext.decodeAudioData(e.target.response, function (b) {
       source.buffer = b;
-      fuckUpAudio();
+      addAudioEffect();
     })
   }
 
   xhr.send(null);
 };
 
-const fuckUpAudio = () => {
+const addAudioEffect = () => {
   //create an instance of Tuna by passing the AudioContext we use
   var tuna = new Tuna(audioContext);
 
-  // phaser = new tuna.Phaser({
-  //   rate: rate, //0.01 to 8 is a decent range, but higher values are possible
-  //   depth: 1, //0 to 1
-  //   feedback: 0.8, //0 to 1+
-  //   stereoPhase: 180, //0 to 180
-  //   baseModulationFrequency: 1500, //500 to 1500
-  //   bypass: 0
-  // });
-  phaser = new tuna.WahWah({
+  audioEffect = new tuna.WahWah({
     automode: true, //true/false
     baseFrequency: 0.5, //0 to 1
     excursionOctaves: 2, //1 to 6
@@ -398,9 +400,9 @@ const fuckUpAudio = () => {
 
   // console.log(source);
 
-  source.connect(phaser);
+  source.connect(audioEffect);
   //connect delay as a standard web audio node to the audio context destination
-  phaser.connect(audioContext.destination);
+  audioEffect.connect(audioContext.destination);
   //start playing!
   source.start(audioContext.currentTime);
 }
