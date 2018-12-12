@@ -8,6 +8,8 @@ const Discoball = require(`./classes/Discoball.js`);
 const Stars = require(`./classes/Stars.js`);
 const FBXLoader = require("three-fbxloader-offical");
 
+const $loadingscreen = document.querySelector(`.loading-screen`);
+
 const FBX = new FBXLoader();
 
 const fact = document.querySelector(`#fact`);
@@ -270,6 +272,10 @@ const loop = () => {
 
   // console.log(displayedPitch);
 
+  if (displayedPitch >= 2) {
+    $loadingscreen.classList.add(`hide`);
+  }
+
   if (displayedPitch >= 9) {
     // nextSong();
     window.setTimeout(nextSong, 1000);
@@ -466,6 +472,12 @@ const handleKeyPressed = e => {
   if (e.keyCode === 77) {
     console.log(`unmute`);
     sound.setVolume(0.5);
+  }
+
+  if (e.keyCode === 13) {
+    console.log("Sesame open ur gates xxx");
+    $loadingscreen.classList.add(`hide`);
+
   }
 };
 
