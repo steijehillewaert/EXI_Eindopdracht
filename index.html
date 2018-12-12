@@ -60,10 +60,12 @@
       height: 100vh;
       position: fixed;
       z-index: 999;
+      transition: opacity 1s ease-in-out;
+      opacity: 1;
     }
 
     .hide {
-      display: none;
+      opacity: 0;
     }
 
     @keyframes rotation {
