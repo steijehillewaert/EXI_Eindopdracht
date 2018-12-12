@@ -1,106 +1,108 @@
 * {
-    border: 0;
-    margin: 0;
+  border: 0;
+  margin: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+#world {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /* background: #02022C; */
+  background: #090516;
+}
+
+.fact-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: fixed;
+  z-index: 99;
+  align-items: center;
+  margin-top: 2rem;
+  flex-direction: column;
+}
+
+#song-info {
+  /* width: 42rem; */
+  width: 60vw;
+  text-align: center;
+  font-size: 2.8vw;
+  font-weight: bold;
+  color: #98FCFE;
+  margin-bottom: .5rem;
+}
+
+#fact {
+  /* width: 42rem; */
+  width: 55vw;
+  text-align: center;
+  font-size: 2vw;
+  font-weight: bold;
+  color: #F852FC;
+}
+
+.loading-screen {
+  background-color: #090516;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 999;
+}
+
+
+.hide {
+  display: none;
+}
+
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
   }
 
-  body {
-    font-family: sans-serif;
+  to {
+    transform: rotate(360deg);
   }
+}
 
-  #world {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    /* background: #02022C; */
-    background: #090516;
-  }
+.bol-logo {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background-image: url('../assets/img/logo_bol.png');
+  background-size: 16.5%;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: 4s linear infinite rotation;
+}
 
-  .fact-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    position: fixed;
-    z-index: 99;
-    align-items: center;
-    margin-top: 2rem;
-    flex-direction: column;
-  }
+.bottom-logo {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-image: url('../assets/img/logo_back.png');
+  background-size: 35%;
+  background-position: center;
+}
 
-  #song-info {
-    /* width: 42rem; */
-    width: 60vw;
-    text-align: center;
-    font-size: 2.8vw;
-    font-weight: bold;
-    color: #98FCFE;
-    margin-bottom: .5rem;
-  }
+.top-logo {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-image: url('../assets/img/logo_top.png'), url('../assets/img/logo_middle.png');
+  background-size: 42%, 35%;
+  background-position: center 9rem, center;
+}
 
-  #fact {
-    /* width: 42rem; */
-    width: 55vw;
-    text-align: center;
-    font-size: 2vw;
-    font-weight: bold;
-    color: #F852FC;
-  }
-
-  .loading-screen {
-    background-color: #090516;
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    z-index: 999;
-  }
-
-  .hide {
-    display: none;
-  }
-
-  @keyframes rotation {
-    from {
-      transform: rotate(0deg);
-    }
-
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .bol-logo {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    background-image: url('../assets/img/logo_bol.png');
-    background-size: 16.5%;
-    background-position: center;
-    background-repeat: no-repeat;
-    animation: 4s linear infinite rotation;
-  }
-
-  .bottom-logo {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    background-repeat: no-repeat;
-    background-image: url('../assets/img/logo_back.png');
-    background-size: 35%;
-    background-position: center;
-  }
-
-  .top-logo {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    background-repeat: no-repeat;
-    background-image: url('../assets/img/logo_top.png'), url('../assets/img/logo_middle.png');
-    background-size: 42%, 35%;
-    background-position: center 9rem, center;
-  }
-
-  .title-start {
-      color: #98FCFE;
-      font-family: Arial, Helvetica, sans-serif;
-      font-weight: 400;
-  }
+.title-start {
+  color: #98FCFE;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+}

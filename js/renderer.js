@@ -506,7 +506,6 @@ const handleKeyPressed = e => {
   if (e.keyCode === 13) {
     console.log("Sesame open ur gates xxx");
     $loadingscreen.classList.add(`hide`);
-
   }
 };
 
