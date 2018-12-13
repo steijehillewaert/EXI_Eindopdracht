@@ -69,7 +69,7 @@ const resetWachttijdSong = () => {
 
 const setWachttijdSong = () => {
   wachttijdSong = false;
-  window.setTimeout(resetWachttijdSong, 5000);
+  window.setTimeout(resetWachttijdSong, 2000);
 }
 
 const resetTimeoutLoadingScreen = () => {
