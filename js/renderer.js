@@ -50,11 +50,39 @@ let pitch = 0,
 let displayedPitch = 0,
   displayedRoll = 0;
 
+let previousFrameBalanceBoardCentered = false;
+
 let ambientLight, light, light1, light2, light3, light4, light5, light6, light7;
 
 let currentSong = 0;
 let currentFact = 0;
 let maxCurrentFact;
+
+let wachttijdSong = true;
+
+
+const resetWachttijdSong = () => {
+  wachttijdSong = true;
+}
+
+const setWachttijdSong = () => {
+  wachttijdSong = false;
+  window.setTimeout(resetWachttijdSong, 5000);
+}
+
+
+let loadingScreenTimeoutId = false;
+
+const resetTimeoutLoadingScreen = () => {
+  window.clearTimeout(loadingScreenTimeoutId);
+  loadingScreenTimeoutId = window.setTimeout(goToLoadingScreen, 10000);
+};
+
+const goToLoadingScreen = () => {
+  console.log("go to loading screen");
+  $loadingscreen.classList.remove(`hide`);
+  audioEffect.bypass = true;
+};
 
 const createScene = () => {
   HEIGHT = window.innerHeight;
@@ -266,6 +294,8 @@ const loop = () => {
     return;
   }
 
+  audioEffect.bypass = true;
+
 
   plaat.rotation.y += 0.005;
 
@@ -292,14 +322,26 @@ const loop = () => {
 
   Discoball.mesh.rotation.x = displayedPitch;
 
-  showLoadingScreen(displayedPitch, displayedRoll);
-
-  hideLoadingScreen(displayedPitch, displayedRoll);
+  const isBalanceBoardCentered = getBalanceBoardIsCentered(displayedPitch, displayedRoll);
+  console.log("isBalanceBoardCentered:", isBalanceBoardCentered);
+  if (!isBalanceBoardCentered) {
+    console.log(displayedPitch, displayedRoll);
+    // reset timer
+    resetTimeoutLoadingScreen();
+    $loadingscreen.classList.add(`hide`);
+    audioEffect.bypass = false;
+  }
 
   checknextSong();
   checkPrevSong();
   addLights(time);
   renderer.render(scene, camera);
+
+  previousFrameBalanceBoardCentered = isBalanceBoardCentered;
+};
+
+const getBalanceBoardIsCentered = (displayedPitch, displayedRoll) => {
+  return (Math.abs(displayedPitch) <= 1.5 && Math.abs(displayedRoll) <= 1.5);
 };
 
 const showLoadingScreen = (displayedPitch, displayedRoll) => {
@@ -308,7 +350,7 @@ const showLoadingScreen = (displayedPitch, displayedRoll) => {
     // console.log($loadingscreen.classList)
     // $loadingscreen.classList.remove(`hide`);
     // window.setTimeout(console.log("2 sec"), 2000);
-    audioEffect.bypass = true;
+
     // console.log(audioEffect.bypass);
   }
 }
@@ -356,20 +398,20 @@ const addLights = time => {
 }
 
 const checknextSong = () => {
-  if (displayedPitch >= 9 && wachttijd) {
+  if (displayedPitch >= 9 && wachttijdSong) {
     nextSong();
     animateDiscobal();
-    setWachttijd();
-    console.log(wachttijd);
+    setWachttijdSong();
+    console.log(wachttijdSong);
   }
 }
 
 const checkPrevSong = () => {
-  if (displayedPitch <= -8 && wachttijd) {
+  if (displayedPitch <= -8 && wachttijdSong) {
     previousSong();
     animateDiscobal();
-    setWachttijd();
-    console.log(wachttijd);
+    setWachttijdSong();
+    console.log(wachttijdSong);
   }
 }
 
@@ -402,7 +444,7 @@ const addAudioEffect = () => {
   var tuna = new Tuna(audioContext);
 
   audioEffect = new tuna.Chorus({
-    rate: 1.5, //0.01 to 8+
+    rate: 4, //0.01 to 8+
     feedback: 0.2, //0 to 1+
     delay: 0.0045, //0 to 1
     bypass: 0 //the value 1 starts the effect as bypassed, 0 or 1
@@ -495,20 +537,6 @@ const loadJSON = () => {
     .then(r => r.json())
     .then(parse);
 };
-
-let wachttijd = true;
-console.log(wachttijd);
-
-const resetWachttijd = () => {
-  wachttijd = true;
-  console.log(wachttijd);
-}
-
-const setWachttijd = () => {
-  wachttijd = false;
-  window.setTimeout(resetWachttijd, 5000);
-  console.log(wachttijd);
-}
 
 const nextSong = () => {
 
@@ -615,6 +643,8 @@ const init = () => {
   createDiscoLights();
   createStars();
   createArrows();
+
+  resetTimeoutLoadingScreen();
   loop();
 
   document.addEventListener("keydown", handleKeyPressed);
