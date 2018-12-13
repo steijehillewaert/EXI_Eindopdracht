@@ -509,16 +509,12 @@ const nextSong = () => {
   source.stop();
 
   console.log(`ik ga naar de volgende song`);
-  // sound.stop();
 
-  action.setLoop(THREE.LoopOnce)
-  // action.clampWhenFinished = true
+  action.setLoop(THREE.LoopOnce);
 
   action.play();
   action.play().reset();
-  // action.stop();
-  // action.loopOnce();
-  // action.paused = true;
+
   console.log(action);
   loadJSON();
 };
