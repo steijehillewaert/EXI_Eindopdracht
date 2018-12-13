@@ -1,4 +1,5 @@
-[{
+[
+    {
         "title": "Boogie Wonderland",
         "artist": "Earth, Wind & Fire",
         "path": "boogie_wonderland",
@@ -13,8 +14,7 @@
         "path": "disco_inferno",
         "facts": [
             "Dansen op discomuziek die je meestal in disco clubs. Het woord 'disco' is niet alleen een muziekgenre maar een een dans- en kledingstijl",
-            "De Trammps waren geïnspireerd door een filmscène waarbij een disco bovenop een gebouw in brand stond",
-            "Zelfs Cookie Monster uit de Muppets schitterde in typische disco kledij, namelijk een funky wit pak"
+            "De Trammps waren geïnspireerd door een filmscène waarbij een disco bovenop een gebouw in brand stond"
         ]
     },
     {
@@ -40,8 +40,6 @@
         "artist": "Bee Gees",
         "path": "stayin_alive",
         "facts": [
-            "Een van de leden was kampioen paintball speler, hij had zijn eigen team genaamd 'The Royal Rat Rangers'",
-            "Ze bestonden uit 3 leden, Robin en Maurice waren tweelingbroers, Barry was 3 jaar ouder",
             "Toen ze nog klein waren deden ze alsof ze nieuwe liedjes moesten schrijven voor artiesten die ze op de radio hoorden",
             "Het ritme van het liedje is gebaseerd op het kloppen van een hart"
         ]

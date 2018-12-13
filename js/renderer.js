@@ -341,7 +341,7 @@ const loop = () => {
 };
 
 const getBalanceBoardIsCentered = (displayedPitch, displayedRoll) => {
-  return (Math.abs(displayedPitch) <= 1.5 && Math.abs(displayedRoll) <= 1.5);
+  return (Math.abs(displayedPitch) <= 1.8 && Math.abs(displayedRoll) <= 1.8);
 };
 
 const showLoadingScreen = (displayedPitch, displayedRoll) => {
@@ -546,15 +546,6 @@ const nextSong = () => {
     currentSong++;
   }
 
-  // if (source.isPlaying) {
-  //   source.stop();
-  // }
-  // if (source.isPlaying === 'false') {
-  //   source.play();
-  // } else if (source.isPlaying === 'true') {
-  //   source.stop();
-  // }
-
   source.stop();
 
   console.log(`ik ga naar de volgende song`);
@@ -565,7 +556,10 @@ const nextSong = () => {
   action.play().reset();
 
   // console.log(action);
+  console.log(`Current fact: ${currentFact}`);
+  currentFact = 0;
   loadJSON();
+
 };
 
 const previousSong = () => {
@@ -582,6 +576,8 @@ const previousSong = () => {
   action.play();
   action.play().reset();
 
+  console.log(`Current fact: ${currentFact}`);
+  currentFact = 0;
   loadJSON();
 };
 
