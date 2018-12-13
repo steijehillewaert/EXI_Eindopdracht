@@ -396,22 +396,11 @@ const addAudioEffect = () => {
   //create an instance of Tuna by passing the AudioContext we use
   var tuna = new Tuna(audioContext);
 
-  // audioEffect = new tuna.audioEffect({
-  //   rate: rate, //0.01 to 8 is a decent range, but higher values are possible
-  //   depth: 1, //0 to 1
-  //   feedback: 0.8, //0 to 1+
-  //   stereoPhase: 180, //0 to 180
-  //   baseModulationFrequency: 1500, //500 to 1500
-  //   bypass: 0
-  // });_
-  audioEffect = new tuna.WahWah({
-    automode: true, //true/false
-    baseFrequency: 0.5, //0 to 1
-    excursionOctaves: 10, //1 to 6
-    sweep: 0.2, //0 to 1
-    resonance: fuckthishit, //1 to 100
-    sensitivity: 0.5, //-1 to 1
-    bypass: 0
+  audioEffect = new tuna.Chorus({
+    rate: 1.5, //0.01 to 8+
+    feedback: 0.2, //0 to 1+
+    delay: 0.0045, //0 to 1
+    bypass: 0 //the value 1 starts the effect as bypassed, 0 or 1
   });
 
 
