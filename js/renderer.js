@@ -356,16 +356,20 @@ const addLights = time => {
 }
 
 const checknextSong = () => {
-  if (displayedPitch >= 9) {
+  if (displayedPitch >= 9 && wachttijd) {
     nextSong();
     animateDiscobal();
+    setWachttijd();
+    console.log(wachttijd);
   }
 }
 
 const checkPrevSong = () => {
-  if (displayedPitch <= -8) {
+  if (displayedPitch <= -8 && wachttijd) {
     previousSong();
     animateDiscobal();
+    setWachttijd();
+    console.log(wachttijd);
   }
 }
 
@@ -388,6 +392,7 @@ const parseSongData = songsData => {
   }
 
   xhr.send(null);
+  console.log(source);
 };
 
 let fuckthishit = 0;
@@ -491,12 +496,36 @@ const loadJSON = () => {
     .then(parse);
 };
 
+let wachttijd = true;
+console.log(wachttijd);
+
+const resetWachttijd = () => {
+  wachttijd = true;
+  console.log(wachttijd);
+}
+
+const setWachttijd = () => {
+  wachttijd = false;
+  window.setTimeout(resetWachttijd, 5000);
+  console.log(wachttijd);
+}
+
 const nextSong = () => {
+
   if (currentSong === 4) {
     currentSong = 0;
   } else {
     currentSong++;
   }
+
+  // if (source.isPlaying) {
+  //   source.stop();
+  // }
+  // if (source.isPlaying === 'false') {
+  //   source.play();
+  // } else if (source.isPlaying === 'true') {
+  //   source.stop();
+  // }
 
   source.stop();
 
@@ -529,13 +558,14 @@ const previousSong = () => {
 };
 
 const animateDiscobal = () => {
-  if (Discoball.mesh.position.y > -15) {
-    Discoball.mesh.position.y--;
-    //Discoball.mesh.--;
-  } else {
-    Discoball.mesh.position.y = 11;
-    Discoball.mesh.position.x = 0;
-  }
+  // if (Discoball.mesh.position.y > -15) {
+  //   Discoball.mesh.position.y--;
+
+  // } else {
+  //   Discoball.mesh.position.y = 11;
+  //   Discoball.mesh.position.x = 0;
+  // }
+  //Discoball.mesh.scale = 5;
 };
 
 const handleKeyPressed = e => {
@@ -568,9 +598,9 @@ const handleKeyPressed = e => {
 const parse = songs => {
   parseSongData(songs);
   parseTextureData(songs);
-  parseFactData(songs);
-  //createTimer(songs);
+
   data = songs;
+  parseFactData(data);
   console.log(data);
 };
 
