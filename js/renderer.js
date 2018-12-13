@@ -27,7 +27,6 @@ let action;
 let audioEffect;
 
 let scene,
-  stars,
   camera,
   cubeCamera,
   fieldOfView,
@@ -38,9 +37,6 @@ let scene,
   WIDTH,
   renderer,
   plaat,
-  listener,
-  audioLoader,
-  sound,
   recordplayer,
   data;
 
@@ -62,15 +58,14 @@ let wachttijdSong = true;
 let loadingScreenTimeoutId = false;
 let timerNextFact;
 
-
 const resetWachttijdSong = () => {
   wachttijdSong = true;
-}
+};
 
 const setWachttijdSong = () => {
   wachttijdSong = false;
   window.setTimeout(resetWachttijdSong, 2000);
-}
+};
 
 const resetTimeoutLoadingScreen = () => {
   window.clearTimeout(loadingScreenTimeoutId);
@@ -264,16 +259,11 @@ const createPlayer = () => {
 const loop = () => {
   requestAnimationFrame(loop);
 
+  console.log(`😡: ${displayedPitch}`);
 
   const time = Date.now() * 0.0025;
 
-  rate = THREE.Math.mapLinear(
-    displayedRoll,
-    11,
-    -9,
-    1,
-    8
-  );
+  rate = THREE.Math.mapLinear(displayedRoll, 11, -9, 1, 8);
 
   // console.log(rate);
 
@@ -295,7 +285,6 @@ const loop = () => {
 
   audioEffect.bypass = true;
 
-
   plaat.rotation.y += 0.005;
 
   Stars.mesh.rotation.y += 0.0005;
@@ -304,13 +293,8 @@ const loop = () => {
   displayedRoll += (roll - displayedRoll) * 0.1;
 
   // Discoball.mesh.position.x = -25;
-  Discoball.mesh.position.x = THREE.Math.mapLinear(
-    displayedPitch,
-    20,
-    -6,
-    -25,
-    55
-  ) - 35;
+  Discoball.mesh.position.x =
+    THREE.Math.mapLinear(displayedPitch, 20, -6, -25, 55) - 35;
   Discoball.mesh.position.z = THREE.Math.mapLinear(
     displayedRoll,
     -20,
@@ -321,7 +305,10 @@ const loop = () => {
 
   Discoball.mesh.rotation.x = displayedPitch;
 
-  const isBalanceBoardCentered = getBalanceBoardIsCentered(displayedPitch, displayedRoll);
+  const isBalanceBoardCentered = getBalanceBoardIsCentered(
+    displayedPitch,
+    displayedRoll
+  );
   console.log("isBalanceBoardCentered:", isBalanceBoardCentered);
   if (!isBalanceBoardCentered) {
     console.log(displayedPitch, displayedRoll);
@@ -340,7 +327,7 @@ const loop = () => {
 };
 
 const getBalanceBoardIsCentered = (displayedPitch, displayedRoll) => {
-  return (Math.abs(displayedPitch) <= 1.8 && Math.abs(displayedRoll) <= 1.8);
+  return Math.abs(displayedPitch) <= 1.8 && Math.abs(displayedRoll) <= 1.8;
 };
 
 const hideLoadingScreen = (displayedPitch, displayedRoll) => {
@@ -349,7 +336,7 @@ const hideLoadingScreen = (displayedPitch, displayedRoll) => {
     audioEffect.bypass = false;
     console.log(audioEffect.bypass);
   }
-}
+};
 
 const addLights = time => {
   const d = 100;
@@ -383,43 +370,48 @@ const addLights = time => {
   cubeCamera.updateCubeMap(renderer, scene);
 
   Discoball.visible = true;
-}
+};
 
 const checknextSong = () => {
   if (displayedPitch >= 9 && wachttijdSong) {
+    console.log(`😡: ${displayedPitch}`);
     nextSong();
     //animateDiscobal();
     setWachttijdSong();
     console.log(wachttijdSong);
   }
-}
+};
 
 const checkPrevSong = () => {
-  if (displayedPitch <= -8 && wachttijdSong) {
+  if (displayedPitch <= -5.5 && wachttijdSong) {
     previousSong();
     //animateDiscobal();
     setWachttijdSong();
     console.log(wachttijdSong);
   }
-}
+};
 
 let AC, audioContext, source, xhr;
 
 const parseSongData = songsData => {
-
-  AC = "AudioContext" in window ? AudioContext : "webkitAudioContext" in window ? webkitAudioContext : document.write("Web Audio not supported");
+  AC =
+    "AudioContext" in window
+      ? AudioContext
+      : "webkitAudioContext" in window
+      ? webkitAudioContext
+      : document.write("Web Audio not supported");
   audioContext = new AC();
   source = audioContext.createBufferSource();
   xhr = new XMLHttpRequest();
 
   xhr.open("GET", `assets/songs/${songsData[currentSong].path}.mp3`);
   xhr.responseType = "arraybuffer";
-  xhr.onload = function (e) {
-    audioContext.decodeAudioData(e.target.response, function (b) {
+  xhr.onload = function(e) {
+    audioContext.decodeAudioData(e.target.response, function(b) {
       source.buffer = b;
       addAudioEffect();
-    })
-  }
+    });
+  };
 
   xhr.send(null);
   console.log(source);
@@ -436,12 +428,10 @@ const addAudioEffect = () => {
     bypass: 0 //the value 1 starts the effect as bypassed, 0 or 1
   });
 
-
   source.connect(audioEffect);
   audioEffect.connect(audioContext.destination);
   source.start(audioContext.currentTime);
-}
-
+};
 
 const parseFactData = songsData => {
   const geometry = new THREE.BoxGeometry(100, 20, 5);
@@ -458,7 +448,7 @@ const parseFactData = songsData => {
   fact.textContent = songsData[currentSong].facts[currentFact];
   songInfo.textContent = `${songsData[currentSong].artist} - ${
     songsData[currentSong].title
-    }`;
+  }`;
 
   maxCurrentFact = songsData[currentSong].facts.length;
   // console.log(`aantal facts in array: ${maxCurrentFact}`);
@@ -476,16 +466,16 @@ const nextFact = () => {
   }
   parseFactData(data);
   // console.log("volgende fact");
-}
-
-const parseTextureData = songsData => {
-
-  new THREE.TextureLoader().load(`./assets/img/${songsData[currentSong].path}.png`, texture => {
-    plaat.material.map = texture;
-  });
 };
 
-
+const parseTextureData = songsData => {
+  new THREE.TextureLoader().load(
+    `./assets/img/${songsData[currentSong].path}.png`,
+    texture => {
+      plaat.material.map = texture;
+    }
+  );
+};
 
 const createArrows = () => {
   FBX.load("./assets/models/arrow.fbx", arrowL => {
@@ -525,7 +515,6 @@ const loadJSON = () => {
 };
 
 const nextSong = () => {
-
   if (currentSong === 4) {
     currentSong = 0;
   } else {
@@ -616,7 +605,7 @@ const accelerometer = () => {
   const five = require("johnny-five");
   const board = new five.Board();
 
-  board.on("ready", function () {
+  board.on("ready", function() {
     const accelerometer = new five.Accelerometer({
       controller: "MMA7361",
       pins: ["A5", "A4", "A3"],
@@ -627,7 +616,7 @@ const accelerometer = () => {
       zeroV: [349.7, 396.2, 287.5]
     });
 
-    accelerometer.on("change", function () {
+    accelerometer.on("change", function() {
       // console.log("accelerometer");
       // console.log("  x            : ", Math.round(this.x));
       // console.log("  y            : ", Math.round(this.y));
