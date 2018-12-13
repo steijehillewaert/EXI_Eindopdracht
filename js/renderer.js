@@ -18,7 +18,7 @@ const songInfo = document.querySelector(`#song-info`);
 
 const clock = new THREE.Clock();
 
-let boardState = false;
+let emptyBoard = true;
 
 let mixers = [];
 
@@ -293,23 +293,50 @@ const loop = () => {
   if (Math.round(displayedPitch) === -2 || Math.round(displayedRoll) === 0 || Math.round(displayedRoll) === 1) {
     // console.log("Board Empty");
 
-    boardState = true;
+    emptyBoard = true;
     // console.log($loadingscreen.classList)
     $loadingscreen.classList.remove(`hide`);
     audioEffect.bypass = true;
     // console.log(audioEffect.bypass);
+  }
+
+  // if (Math.round(displayedRoll) <= -6 && Math.round(displayedRoll) <= 9) {
+  //   console.log(`iemand op het bord`);
+  // }
+
+
+  if (pitch === 0 && roll === 0) {
+    emptyBoard = true;
   } else {
-    boardState = false;
+    emptyBoard = false;
   }
 
-  if (displayedPitch >= 2 || displayedRoll >= 2) {
+  if (!emptyBoard) {
     $loadingscreen.classList.add(`hide`);
-
-
-    audioEffect.bypass = false;
-
-    console.log(audioEffect.bypass);
   }
+
+  console.log(emptyBoard);
+
+  // if (Math.round(displayedPitch) > -2 || Math.round(displayedRoll) < 0 || Math.round(displayedRoll) > 0) {
+  //   emptyBoard = false;
+  // }
+
+  // if (emptyBoard = false) {
+  //   console.log("NIET EMPTY");
+  // }
+
+  // if (boardState = true) {
+  //   $loadingscreen.classList.add(`hide`);
+
+
+  //   audioEffect.bypass = false;
+
+  //   console.log(audioEffect.bypass);
+  // }
+
+  // if (boardState = false) {
+  //   $loadingscreen.classList.add(`hide`);
+  // }
 
   if (displayedPitch >= 9) {
     // nextSong();
@@ -322,7 +349,7 @@ const loop = () => {
     animateDiscobal();
   }
 
-  console.log(boardState);
+  // console.log(emptyBoard);
 
   //move dico lights -> PARTYYYY
   const d = 100;
@@ -358,6 +385,8 @@ const loop = () => {
   Discoball.visible = true;
   renderer.render(scene, camera);
 };
+
+
 
 let AC, audioContext, source, xhr;
 
@@ -575,6 +604,7 @@ const accelerometer = () => {
       controller: "MMA7361",
       pins: ["A5", "A4", "A3"],
       sleepPin: 13,
+      sensitivity: 16384,
       // autoCalibrate: true,
       // override the zeroV values if you know what
       // they are from a previous autoCalibrate
@@ -583,9 +613,9 @@ const accelerometer = () => {
 
     accelerometer.on("change", function () {
       // console.log("accelerometer");
-      // console.log("  x            : ", Math.round(this.x));
-      // console.log("  y            : ", Math.round(this.y));
-      // console.log("  z            : ", Math.round(this.z));
+      // console.log("  x            : ", this.x);
+      // console.log("  y            : ", this.y);
+      // console.log("  z            : ", this.z);
       // console.log("  links/rechts        : ", Math.round(this.pitch));
       // console.log("  Voor/achter         : ", Math.round(this.roll));
       // console.log("  acceleration : ", this.acceleration);
