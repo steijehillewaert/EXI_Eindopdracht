@@ -247,7 +247,7 @@ const loop = () => {
     8
   );
 
-  console.log(rate);
+  // console.log(rate);
 
   // console.log(displayedRoll);
 
@@ -260,6 +260,11 @@ const loop = () => {
   if (!plaat) {
     return;
   }
+
+  if (!phaser) {
+    return;
+  }
+
 
   plaat.rotation.y += 0.005;
 
@@ -304,7 +309,7 @@ const loop = () => {
   }
 
   if (displayedPitch >= 9) {
-    // nextSong();
+    nextSong();
     window.setTimeout(nextSong, 1000);
     animateDiscobal();
   }
