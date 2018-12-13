@@ -26,8 +26,6 @@ let action;
 
 let phaser;
 
-const time = Date.now() * 0.0025;
-
 let scene,
   stars,
   camera,
@@ -239,6 +237,8 @@ const createPlayer = () => {
 const loop = () => {
   requestAnimationFrame(loop);
 
+  const time = Date.now() * 0.0025;
+
   rate = THREE.Math.mapLinear(
     displayedRoll,
     11,
@@ -291,35 +291,36 @@ const loop = () => {
 
   Discoball.mesh.rotation.x = displayedPitch;
 
+  showLoadingScreen(displayedPitch, displayedRoll);
+
+  hideLoadingScreen(displayedPitch, displayedRoll);
+
+  checknextSong();
+  checkPrevSong();
+  addLights(time);
+  renderer.render(scene, camera);
+};
+
+const showLoadingScreen = (displayedPitch, displayedRoll) => {
   if (displayedPitch <= 1 && displayedRoll <= 1) {
     // console.log("niemand staat op het bord");
     // console.log($loadingscreen.classList)
     // $loadingscreen.classList.remove(`hide`);
+    // window.setTimeout(console.log("2 sec"), 2000);
     phaser.bypass = true;
     console.log(phaser.bypass);
   }
+}
 
+const hideLoadingScreen = (displayedPitch, displayedRoll) => {
   if (displayedPitch >= 2 || displayedRoll >= 2) {
     $loadingscreen.classList.add(`hide`);
-
-
     phaser.bypass = false;
-
     console.log(phaser.bypass);
   }
+}
 
-  if (displayedPitch >= 9) {
-    nextSong();
-    window.setTimeout(nextSong, 1000);
-    animateDiscobal();
-  }
-
-  if (displayedPitch <= -8) {
-    previousSong();
-    animateDiscobal();
-  }
-
-  //move dico lights -> PARTYYYY
+const addLights = time => {
   const d = 100;
   light2.position.x = Math.cos(time * 0.3) * d;
   light2.position.y = Math.cos(time * 0.1) * d;
@@ -351,8 +352,21 @@ const loop = () => {
   cubeCamera.updateCubeMap(renderer, scene);
 
   Discoball.visible = true;
-  renderer.render(scene, camera);
-};
+}
+
+const checknextSong = () => {
+  if (displayedPitch >= 9) {
+    nextSong();
+    animateDiscobal();
+  }
+}
+
+const checkPrevSong = () => {
+  if (displayedPitch <= -8) {
+    previousSong();
+    animateDiscobal();
+  }
+}
 
 let AC, audioContext, source, xhr;
 
@@ -400,15 +414,8 @@ const fuckUpAudio = () => {
   });
 
 
-
-  //connect the source to the Tuna delay
-
-  // console.log(source);
-
   source.connect(phaser);
-  //connect delay as a standard web audio node to the audio context destination
   phaser.connect(audioContext.destination);
-  //start playing!
   source.start(audioContext.currentTime);
 }
 
@@ -492,6 +499,7 @@ const loadJSON = () => {
 };
 
 const nextSong = () => {
+  window.setTimeout(console.log('ik wacht'), 2000);
   if (currentSong === 4) {
     currentSong = 0;
   } else {
