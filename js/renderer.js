@@ -24,7 +24,7 @@ let mixers = [];
 
 let action;
 
-let phaser;
+let audioEffect;
 
 let scene,
   stars,
@@ -262,7 +262,7 @@ const loop = () => {
     return;
   }
 
-  if (!phaser) {
+  if (!audioEffect) {
     return;
   }
 
@@ -280,7 +280,7 @@ const loop = () => {
     20,
     -6,
     -25,
-    45
+    55
   ) - 35;
   Discoball.mesh.position.z = THREE.Math.mapLinear(
     displayedRoll,
@@ -308,16 +308,16 @@ const showLoadingScreen = (displayedPitch, displayedRoll) => {
     // console.log($loadingscreen.classList)
     // $loadingscreen.classList.remove(`hide`);
     // window.setTimeout(console.log("2 sec"), 2000);
-    phaser.bypass = true;
-    // console.log(phaser.bypass);
+    audioEffect.bypass = true;
+    // console.log(audioEffect.bypass);
   }
 }
 
 const hideLoadingScreen = (displayedPitch, displayedRoll) => {
   if (displayedPitch >= 2 || displayedRoll >= 2) {
     $loadingscreen.classList.add(`hide`);
-    phaser.bypass = false;
-    console.log(phaser.bypass);
+    audioEffect.bypass = false;
+    console.log(audioEffect.bypass);
   }
 }
 
@@ -383,7 +383,7 @@ const parseSongData = songsData => {
   xhr.onload = function (e) {
     audioContext.decodeAudioData(e.target.response, function (b) {
       source.buffer = b;
-      fuckUpAudio();
+      addAudioEffect();
     })
   }
 
@@ -392,11 +392,11 @@ const parseSongData = songsData => {
 
 let fuckthishit = 0;
 
-const fuckUpAudio = () => {
+const addAudioEffect = () => {
   //create an instance of Tuna by passing the AudioContext we use
   var tuna = new Tuna(audioContext);
 
-  // phaser = new tuna.Phaser({
+  // audioEffect = new tuna.audioEffect({
   //   rate: rate, //0.01 to 8 is a decent range, but higher values are possible
   //   depth: 1, //0 to 1
   //   feedback: 0.8, //0 to 1+
@@ -404,7 +404,7 @@ const fuckUpAudio = () => {
   //   baseModulationFrequency: 1500, //500 to 1500
   //   bypass: 0
   // });_
-  phaser = new tuna.WahWah({
+  audioEffect = new tuna.WahWah({
     automode: true, //true/false
     baseFrequency: 0.5, //0 to 1
     excursionOctaves: 10, //1 to 6
@@ -415,8 +415,8 @@ const fuckUpAudio = () => {
   });
 
 
-  source.connect(phaser);
-  phaser.connect(audioContext.destination);
+  source.connect(audioEffect);
+  audioEffect.connect(audioContext.destination);
   source.start(audioContext.currentTime);
 }
 
