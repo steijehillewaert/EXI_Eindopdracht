@@ -59,6 +59,8 @@ let currentFact = 0;
 let maxCurrentFact;
 
 let wachttijdSong = true;
+let loadingScreenTimeoutId = false;
+let timerNextFact;
 
 
 const resetWachttijdSong = () => {
@@ -69,9 +71,6 @@ const setWachttijdSong = () => {
   wachttijdSong = false;
   window.setTimeout(resetWachttijdSong, 5000);
 }
-
-
-let loadingScreenTimeoutId = false;
 
 const resetTimeoutLoadingScreen = () => {
   window.clearTimeout(loadingScreenTimeoutId);
@@ -344,17 +343,6 @@ const getBalanceBoardIsCentered = (displayedPitch, displayedRoll) => {
   return (Math.abs(displayedPitch) <= 1.8 && Math.abs(displayedRoll) <= 1.8);
 };
 
-const showLoadingScreen = (displayedPitch, displayedRoll) => {
-  if (displayedPitch <= 1 && displayedRoll <= 1) {
-    // console.log("niemand staat op het bord");
-    // console.log($loadingscreen.classList)
-    // $loadingscreen.classList.remove(`hide`);
-    // window.setTimeout(console.log("2 sec"), 2000);
-
-    // console.log(audioEffect.bypass);
-  }
-}
-
 const hideLoadingScreen = (displayedPitch, displayedRoll) => {
   if (displayedPitch >= 2 || displayedRoll >= 2) {
     $loadingscreen.classList.add(`hide`);
@@ -437,8 +425,6 @@ const parseSongData = songsData => {
   console.log(source);
 };
 
-let fuckthishit = 0;
-
 const addAudioEffect = () => {
   //create an instance of Tuna by passing the AudioContext we use
   var tuna = new Tuna(audioContext);
@@ -478,7 +464,8 @@ const parseFactData = songsData => {
   // console.log(`aantal facts in array: ${maxCurrentFact}`);
   // console.log(currentFact);
 
-  window.setTimeout(nextFact, 10000);
+  window.clearTimeout(timerNextFact);
+  timerNextFact = window.setTimeout(nextFact, 10000);
 };
 
 const nextFact = () => {
@@ -487,7 +474,6 @@ const nextFact = () => {
   } else {
     currentFact++;
   }
-
   parseFactData(data);
   // console.log("volgende fact");
 }
@@ -551,15 +537,10 @@ const nextSong = () => {
   console.log(`ik ga naar de volgende song`);
 
   action.setLoop(THREE.LoopOnce);
-
   action.play();
   action.play().reset();
 
-  // console.log(action);
-  console.log(`Current fact: ${currentFact}`);
-  currentFact = 0;
   loadJSON();
-
 };
 
 const previousSong = () => {
@@ -572,12 +553,9 @@ const previousSong = () => {
   source.stop();
 
   action.setLoop(THREE.LoopOnce);
-
   action.play();
   action.play().reset();
 
-  console.log(`Current fact: ${currentFact}`);
-  currentFact = 0;
   loadJSON();
 };
 
