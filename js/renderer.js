@@ -370,6 +370,8 @@ const parseSongData = songsData => {
   xhr.send(null);
 };
 
+let fuckthishit = 0;
+
 const fuckUpAudio = () => {
   //create an instance of Tuna by passing the AudioContext we use
   var tuna = new Tuna(audioContext);
@@ -381,13 +383,13 @@ const fuckUpAudio = () => {
   //   stereoPhase: 180, //0 to 180
   //   baseModulationFrequency: 1500, //500 to 1500
   //   bypass: 0
-  // });
+  // });_
   phaser = new tuna.WahWah({
     automode: true, //true/false
     baseFrequency: 0.5, //0 to 1
-    excursionOctaves: 2, //1 to 6
+    excursionOctaves: 10, //1 to 6
     sweep: 0.2, //0 to 1
-    resonance: 10, //1 to 100
+    resonance: fuckthishit, //1 to 100
     sensitivity: 0.5, //-1 to 1
     bypass: 0
   });
@@ -595,6 +597,8 @@ const accelerometer = () => {
 
       pitch = this.pitch;
       roll = this.roll;
+
+      fuckthishit = this.pitch;
     });
   });
 };
