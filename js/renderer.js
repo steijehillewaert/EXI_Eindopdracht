@@ -457,10 +457,13 @@ const nextFact = () => {
 }
 
 const parseTextureData = songsData => {
+
   new THREE.TextureLoader().load(`./assets/img/${songsData[currentSong].path}.png`, texture => {
     plaat.material.map = texture;
   });
 };
+
+
 
 const createArrows = () => {
   FBX.load("./assets/models/arrow.fbx", arrowL => {
@@ -515,7 +518,7 @@ const nextSong = () => {
   action.play();
   action.play().reset();
 
-  console.log(action);
+  // console.log(action);
   loadJSON();
 };
 
@@ -527,7 +530,12 @@ const previousSong = () => {
   }
 
   source.stop();
+
+  action.setLoop(THREE.LoopOnce);
+
   action.play();
+  action.play().reset();
+
   loadJSON();
 };
 
@@ -559,6 +567,7 @@ const handleKeyPressed = e => {
 
   if (e.keyCode === 32) {
     nextSong();
+    // previousSong();
   }
 
   // if (e.keyCode === 13) {
