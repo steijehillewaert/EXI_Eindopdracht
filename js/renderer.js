@@ -18,7 +18,7 @@ const songInfo = document.querySelector(`#song-info`);
 
 const clock = new THREE.Clock();
 
-let emptyBoard = true;
+let emptyBoard = false;
 
 let mixers = [];
 
@@ -288,59 +288,48 @@ const loop = () => {
     return;
   }
 
-  // console.log(Math.round(displayedRoll));
-
-  if (Math.round(displayedPitch) === -2 || Math.round(displayedRoll) === 0 || Math.round(displayedRoll) === 1) {
-    // console.log("Board Empty");
-
-    emptyBoard = true;
+  if (displayedPitch <= 1 && displayedRoll <= 1) {
+    console.log("niemand staat op het bord");
+    // console.log("niemand staat op het bord");
     // console.log($loadingscreen.classList)
     $loadingscreen.classList.remove(`hide`);
     audioEffect.bypass = true;
-    // console.log(audioEffect.bypass);
+    console.log(audioEffect.bypass);
   }
-
-  // if (Math.round(displayedRoll) <= -6 && Math.round(displayedRoll) <= 9) {
-  //   console.log(`iemand op het bord`);
-  // }
-
-
-  if (pitch === 0 && roll === 0) {
-    emptyBoard = true;
-  } else {
-    emptyBoard = false;
-  }
-
-  if (!emptyBoard) {
+  if (displayedPitch >= 2 || displayedRoll >= 2) {
     $loadingscreen.classList.add(`hide`);
+    audioEffect.bypass = false;
+    console.log(audioEffect.bypass);
   }
 
-  console.log(emptyBoard);
 
-  // if (Math.round(displayedPitch) > -2 || Math.round(displayedRoll) < 0 || Math.round(displayedRoll) > 0) {
-  //   emptyBoard = false;
+
+  // console.log(pitch);
+  // console.log(roll);
+
+  // if (pitch === 0 && roll === 0 || pitch === -5.71) {
+  //   emptyBoard = true;
+  //   audioEffect.bypass = true;
+  // } else {
+  //   $loadingscreen.classList.add(`hide`);
   // }
+
+  // console.log(emptyBoard);
+
+  // console.log(displayedRoll);
 
   // if (emptyBoard = false) {
-  //   console.log("NIET EMPTY");
-  // }
-
-  // if (boardState = true) {
-  //   $loadingscreen.classList.add(`hide`);
-
-
   //   audioEffect.bypass = false;
-
-  //   console.log(audioEffect.bypass);
   // }
 
-  // if (boardState = false) {
-  //   $loadingscreen.classList.add(`hide`);
+  // if (displayedPitch <= 9 && pitch != 0) {
+  //   console.log("doe maar effectje");
   // }
+
 
   if (displayedPitch >= 9) {
     // nextSong();
-    window.setTimeout(nextSong, 1000);
+    nextSong();
     animateDiscobal();
   }
 
@@ -348,8 +337,6 @@ const loop = () => {
     previousSong();
     animateDiscobal();
   }
-
-  // console.log(emptyBoard);
 
   //move dico lights -> PARTYYYY
   const d = 100;
@@ -564,10 +551,10 @@ const handleKeyPressed = e => {
     nextFact();
   }
 
-  // if (e.keyCode === 13) {
-  //   console.log("Sesame open ur gates xxx");
-  //   $loadingscreen.classList.add(`hide`);
-  // }
+  if (e.keyCode === 13) {
+    console.log("Sesame open ur gates xxx");
+    $loadingscreen.classList.add(`hide`);
+  }
 };
 
 const parse = songs => {
