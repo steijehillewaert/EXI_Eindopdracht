@@ -237,6 +237,7 @@ const createPlayer = () => {
 const loop = () => {
   requestAnimationFrame(loop);
 
+
   const time = Date.now() * 0.0025;
 
   rate = THREE.Math.mapLinear(
@@ -308,7 +309,7 @@ const showLoadingScreen = (displayedPitch, displayedRoll) => {
     // $loadingscreen.classList.remove(`hide`);
     // window.setTimeout(console.log("2 sec"), 2000);
     phaser.bypass = true;
-    console.log(phaser.bypass);
+    // console.log(phaser.bypass);
   }
 }
 
@@ -438,8 +439,8 @@ const parseFactData = songsData => {
     }`;
 
   maxCurrentFact = songsData[currentSong].facts.length;
-  console.log(`aantal facts in array: ${maxCurrentFact}`);
-  console.log(currentFact);
+  // console.log(`aantal facts in array: ${maxCurrentFact}`);
+  // console.log(currentFact);
 
   window.setTimeout(nextFact, 10000);
 };
@@ -452,7 +453,7 @@ const nextFact = () => {
   }
 
   parseFactData(data);
-  console.log("volgende fact");
+  // console.log("volgende fact");
 }
 
 const parseTextureData = songsData => {
@@ -499,7 +500,6 @@ const loadJSON = () => {
 };
 
 const nextSong = () => {
-  window.setTimeout(console.log('ik wacht'), 2000);
   if (currentSong === 4) {
     currentSong = 0;
   } else {
@@ -510,7 +510,15 @@ const nextSong = () => {
 
   console.log(`ik ga naar de volgende song`);
   // sound.stop();
+
+  action.setLoop(THREE.LoopOnce)
+  // action.clampWhenFinished = true
+
   action.play();
+  action.play().reset();
+  // action.stop();
+  // action.loopOnce();
+  // action.paused = true;
   console.log(action);
   loadJSON();
 };
@@ -546,6 +554,15 @@ const handleKeyPressed = e => {
   }
   if (e.keyCode === 38) {
     nextFact();
+  }
+
+  if (e.keyCode === 13) {
+    $loadingscreen.classList.add(`hide`);
+    // nextSong();
+  }
+
+  if (e.keyCode === 32) {
+    nextSong();
   }
 
   // if (e.keyCode === 13) {
