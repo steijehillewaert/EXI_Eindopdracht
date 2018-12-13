@@ -12,6 +12,7 @@ class Discoball {
             specular: "white",
             color: "gray",
             side: THREE.DoubleSide,
+            transparent: true,
             // envMap: cubeCamera.renderTarget.texture,
             combine: THREE.AddOperation
         });
@@ -21,6 +22,7 @@ class Discoball {
 
         discoball.scale.set(0.1, 0.1, 0.1);
         discoball.position.y = 11;
+        //mat.opacity = 0.5;
     }
 };
 

@@ -388,7 +388,7 @@ const addLights = time => {
 const checknextSong = () => {
   if (displayedPitch >= 9 && wachttijdSong) {
     nextSong();
-    animateDiscobal();
+    //animateDiscobal();
     setWachttijdSong();
     console.log(wachttijdSong);
   }
@@ -397,7 +397,7 @@ const checknextSong = () => {
 const checkPrevSong = () => {
   if (displayedPitch <= -8 && wachttijdSong) {
     previousSong();
-    animateDiscobal();
+    //animateDiscobal();
     setWachttijdSong();
     console.log(wachttijdSong);
   }
@@ -560,21 +560,16 @@ const previousSong = () => {
 };
 
 const animateDiscobal = () => {
-  // if (Discoball.mesh.position.y > -15) {
-  //   Discoball.mesh.position.y--;
-
-  // } else {
-  //   Discoball.mesh.position.y = 11;
-  //   Discoball.mesh.position.x = 0;
-  // }
-  //Discoball.mesh.scale = 5;
+  Discoball.mesh.material.opacity = 0.1;
 };
 
 const handleKeyPressed = e => {
   if (e.keyCode === 39) {
     nextSong();
+    //animateDiscobal();
   }
   if (e.keyCode === 37) {
+    //animateDiscobal();
     previousSong();
   }
   if (e.keyCode === 38) {
@@ -583,18 +578,11 @@ const handleKeyPressed = e => {
 
   if (e.keyCode === 13) {
     $loadingscreen.classList.add(`hide`);
-    // nextSong();
   }
 
   if (e.keyCode === 32) {
     nextSong();
-    // previousSong();
   }
-
-  // if (e.keyCode === 13) {
-  //   console.log("Sesame open ur gates xxx");
-  //   $loadingscreen.classList.add(`hide`);
-  // }
 };
 
 const parse = songs => {
